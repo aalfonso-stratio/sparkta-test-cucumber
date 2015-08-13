@@ -9,6 +9,12 @@ public class ThenSpec extends BaseSpec {
         this.commonspec = spec;
     }
 
+    @Then("^the service response status must be '(.*?)'.$")
+    public void assertResponseStatus(Integer expectedStatus) {
+        commonspec.getLogger().info("Verifying response message");
+        assertThat(commonspec.getResponse()).hasStatusCode(expectedStatus);
+    }
+    
     @Then("^the service response must contain the text '(.*?)'$")
     public void assertResponseMessage(String expectedText) {
         commonspec.getLogger().info("Verifying response message");
@@ -32,4 +38,11 @@ public class ThenSpec extends BaseSpec {
         commonspec.getLogger().info("Verifying response status code and message");
         assertThat(commonspec.getResponse()).doesNotHaveStatusCodeNorMessage(unexpectedStatus, unexpectedText);
     }
+        
+    @Then("^the service response status must be '(.*?)' and its response length must be '(.*?)'$")
+    public void assertResponseStatusLength(Integer expectedStatus, Integer expectedLength) {
+        commonspec.getLogger().info("Verifying response status code and response length");
+        assertThat(commonspec.getResponse()).hasStatusCodeAndLength(expectedStatus, expectedLength);
+    }
+    
 }

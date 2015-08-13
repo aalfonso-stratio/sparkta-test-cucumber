@@ -20,4 +20,35 @@ public class WhenSpec extends BaseSpec {
 
         commonspec.setResponse("policy", response.get());
     }
+    
+    @When("^I try to get all available '(.*?)' of type '(.*?)'$")
+    public void getAllElementsOfType(String element, String expectedType) throws IOException, InterruptedException, ExecutionException {
+	String type = expectedType;
+	
+	if (expectedType.equals("null")) {
+	    type = "";
+	}
+	
+        Future<Response> response = commonspec.getClient().prepareGet(commonspec.getURL() + element + "/" + type).execute();
+
+        commonspec.setResponse("template", response.get());
+    }
+    
+    @When("^I try to get '(.*?)' of type '(.*?)' with name '(.*?)'$")
+    public void getAllElementsOfTypeWithName(String element, String expectedType, String expectedName) throws IOException, InterruptedException, ExecutionException {
+	String type = expectedType;
+	String name = expectedName;
+	
+	if (expectedType.equals("null")) {
+	    type = "";
+	}
+	
+	if (expectedName.equals("null")) {
+	    name = "";
+	}
+	
+        Future<Response> response = commonspec.getClient().prepareGet(commonspec.getURL() + element + "/" + type + "/" + name).execute();
+
+        commonspec.setResponse("template", response.get());
+    }
 }

@@ -2,7 +2,8 @@
 thread-count="1">
 <test name="swagger api">
 <packages>
-<package name="com.stratio.tests" />
+	<package name="com.stratio.tests.templates" />
+	<package name="com.stratio.tests.fragments" />
 </packages>
 </test>
 </suite>

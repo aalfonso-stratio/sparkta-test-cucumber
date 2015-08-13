@@ -1,0 +1,8 @@
+<suite name="Suite1" verbose="10" parallel="instances"
+thread-count="1">
+<test name="swagger api">
+<packages>
+<package name="com.stratio.tests" />
+</packages>
+</test>
+</suite>

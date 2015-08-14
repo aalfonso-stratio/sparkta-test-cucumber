@@ -38,6 +38,6 @@ Feature: Test all GET operations for templates in Sparkta Swagger API
 		Then the service response status must be '404'.
 	
 	Scenario: Get all available templates of type output with name elasticsearch
-		When I try to get 'template' of type 'output' with name 'elasticsearch'
+		When I try to get 'template' of type 'output' with name 'existing_template'
 		Then the service response status must be '200'.
 	

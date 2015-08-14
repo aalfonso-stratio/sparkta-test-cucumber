@@ -1,6 +1,8 @@
 package com.stratio.sparkta.specs;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -9,7 +11,7 @@ import com.ning.http.client.Response;
 import cucumber.api.java.en.When;
 
 public class WhenSpec extends BaseSpec {
-
+    
     public WhenSpec(Common spec) {
         this.commonspec = spec;
     }
@@ -31,7 +33,7 @@ public class WhenSpec extends BaseSpec {
 	
         Future<Response> response = commonspec.getClient().prepareGet(commonspec.getURL() + element + "/" + type).execute();
 
-        commonspec.setResponse("template", response.get());
+        commonspec.setResponse(element, response.get());
     }
     
     @When("^I try to get '(.*?)' of type '(.*?)' with name '(.*?)'$")
@@ -45,10 +47,36 @@ public class WhenSpec extends BaseSpec {
 	
 	if (expectedName.equals("null")) {
 	    name = "";
+	} else {
+	    Properties defaultProps = new Properties();
+	    defaultProps.load(new FileInputStream(element + ".properties"));
+	    name = defaultProps.getProperty(expectedName);
 	}
 	
         Future<Response> response = commonspec.getClient().prepareGet(commonspec.getURL() + element + "/" + type + "/" + name).execute();
 
-        commonspec.setResponse("template", response.get());
+        commonspec.setResponse(element, response.get());
+    }
+    
+    @When("^I try to delete a '(.*?)' of type '(.*?)' with name '(.*?)'$")
+    public void deleteElementOfTypeWithName(String element, String expectedType, String expectedName) throws IOException, InterruptedException, ExecutionException {
+	String type = expectedType;
+	String name = expectedName;
+	
+	if (expectedType.equals("null")) {
+	    type = "";
+	}
+	
+	if (expectedName.equals("null")) {
+	    name = "";
+	} else {
+	    Properties defaultProps = new Properties();
+	    defaultProps.load(new FileInputStream(element + ".properties"));
+	    name = defaultProps.getProperty(expectedName);
+	}
+	
+	Future<Response> response = commonspec.getClient().prepareDelete(commonspec.getURL() + element + "/" + type + "/" + name).execute();
+
+        commonspec.setResponse(element, response.get());
     }
 }

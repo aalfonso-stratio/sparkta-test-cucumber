@@ -44,5 +44,5 @@ public class ThenSpec extends BaseSpec {
         commonspec.getLogger().info("Verifying response status code and response length");
         assertThat(commonspec.getResponse()).hasStatusCodeAndLength(expectedStatus, expectedLength);
     }
-    
+       
 }

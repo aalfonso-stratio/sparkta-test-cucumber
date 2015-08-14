@@ -24,6 +24,64 @@ public class WhenSpec extends BaseSpec {
 
         commonspec.setResponse("policy", response.get());
     }
+    @When("^I try to get policy with name '(.*?)'$")
+    public void getPolicyWithName(String name) throws IOException, InterruptedException, ExecutionException {
+	String readElement;
+	
+	if (name.equals("null")) {
+	    readElement = "";
+	} else {	
+	    Properties defaultProps = new Properties();
+	    defaultProps.load(new FileInputStream("policy.properties"));
+	    readElement = defaultProps.getProperty(name);
+	} 
+        Future<Response> response = commonspec.getClient().prepareGet(commonspec.getURL() + "policy/find/" + readElement).execute();
+
+        commonspec.setResponse("policy", response.get());
+    }
+    
+    @When("^I try to get all policies with fragmentType '(.*?)' and name '(.*?)'$")	
+    public void getPoliciesWithFragmentTypeAndName(String fragmentType, String fragmentName) throws IOException, InterruptedException, ExecutionException {
+	String type;
+	String name;
+	
+	Properties defaultProps = new Properties();
+	defaultProps.load(new FileInputStream("policy.properties"));
+	
+	if (fragmentType.equals("null")) {
+	    type = "";
+	} else {	
+	    type = defaultProps.getProperty(fragmentType);
+	}
+	
+	if (fragmentName.equals("null")) {
+	    name = "";
+	} else {	
+	    name = defaultProps.getProperty(fragmentName);
+	}
+	
+	Future<Response> response = commonspec.getClient().prepareGet(commonspec.getURL() + "policy/fragment/" + type + "/" + name).execute();
+
+        commonspec.setResponse("policy", response.get());
+	
+    }
+    
+    @When("^I try to run policy '(.*?)'$")
+    public void runPolicy(String policy) throws IOException, InterruptedException, ExecutionException {
+	String readElement;
+	
+	if (policy.equals("null")) {
+	    readElement = "";
+	} else {	
+	    Properties defaultProps = new Properties();
+	    defaultProps.load(new FileInputStream("policy.properties"));
+	    readElement = defaultProps.getProperty(policy);
+	} 
+        Future<Response> response = commonspec.getClient().prepareGet(commonspec.getURL() + "policy/run/" + readElement).execute();
+
+        commonspec.setResponse("policy", response.get());
+    }
+    
     
     @When("^I try to get all available policyContexts$")
     public void getAllPolicyContexts() throws IOException, InterruptedException, ExecutionException {

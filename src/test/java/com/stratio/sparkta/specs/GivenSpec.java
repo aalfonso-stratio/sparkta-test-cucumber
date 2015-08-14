@@ -1,8 +1,6 @@
 package com.stratio.sparkta.specs;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -10,8 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.testng.Assert;
 
-import com.ning.http.client.ListenableFuture;
-import com.ning.http.client.Request;
 import com.ning.http.client.Response;
 
 import cucumber.api.java.en.Given;
@@ -24,29 +20,6 @@ public class GivenSpec extends BaseSpec {
     public GivenSpec(Common spec) {
         this.commonspec = spec;
     }
-    
-    @Given("^I create '(.*?)' with '(.*?)'$")
-    public void createPolicyWith(String element, String name) throws IOException, InterruptedException, ExecutionException {
-	Properties defaultProps = new Properties();
-	defaultProps.load(new FileInputStream(element + ".properties"));
-	String readElement = defaultProps.getProperty(name);
-	
-	Request request = commonspec.getClient().preparePost(commonspec.getURL() + element).setHeader("Content-Type","application/json").setBody(readElement).build();
-	ListenableFuture<Response> response = commonspec.getClient().executeRequest(request);
-	commonspec.setResponse(element, response.get());
-    }
-    
-//    @Given("^I create fragment '(.*?)'$")
-//    public void createFragmentOfType(String fragmentName) throws IOException, InterruptedException, ExecutionException {
-//	Properties defaultProps = new Properties();
-//	defaultProps.load(new FileInputStream("fragment.properties"));
-//	String fragment = defaultProps.getProperty(fragmentName);
-//
-//	Request request = commonspec.getClient().preparePost(commonspec.getURL() + "fragment").setHeader("Content-Type","application/json").setBody(fragment).build();
-//
-//	ListenableFuture<Response> response = commonspec.getClient().executeRequest(request);
-//	commonspec.setResponse("fragment", response.get());
-//    }
     
     @Given("^I have finished feature$")
     public void cleanUp() throws IOException, InterruptedException, ExecutionException {

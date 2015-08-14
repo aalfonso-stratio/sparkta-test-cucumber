@@ -49,7 +49,15 @@ Feature: Test all DELETE operations for fragments in Sparkta Swagger API
 		When I try to get all available policies	
 		Then the service response status must be '200' and its response must contain the text '[]'
 	
-	
+	Scenario: Delete a fragment with type output and name output referenced by policy
+		Given I create 'fragment' with 'validOutputFragment'
+		And I create 'policy' with 'policyExampleTwoOutputFragments'
+		When I try to delete a 'fragment' of type 'output' with name 'validOutputFragmentName'
+		Then the service response status must be '200'.
+		When I try to get all available 'fragment' of type 'output'
+		Then the service response status must be '200' and its response length must be '0'
+		When I try to get all available policies	
+		Then the service response status must be '200' and its response must contain the text '[]'
 			
 	Scenario: Clean everything up
 		Given I have finished feature

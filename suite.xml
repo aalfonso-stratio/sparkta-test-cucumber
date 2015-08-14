@@ -4,6 +4,8 @@ thread-count="1">
 <packages>
 	<package name="com.stratio.tests.templates" />
 	<package name="com.stratio.tests.fragments" />
+	<package name="com.stratio.tests.policyContexts" />
+	<package name="com.stratio.tests.policies" />
 </packages>
 </test>
 </suite>

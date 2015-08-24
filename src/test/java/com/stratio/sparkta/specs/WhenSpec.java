@@ -125,6 +125,23 @@ public class WhenSpec extends BaseSpec {
         commonspec.setResponse(element, response.get());
     }
     
+    @When("^I try to update a '(.*?)' with '(.*?)'$")
+    public void updateElementWith(String element, String name) throws IOException, InterruptedException, ExecutionException {
+	String readElement = name;
+	
+	if (name.equals("null")) {
+	    readElement = "";
+	} else {
+	    Properties defaultProps = new Properties();
+	    defaultProps.load(new FileInputStream(element + ".properties"));
+	    readElement = defaultProps.getProperty(readElement);
+	}
+	
+	Request request = commonspec.getClient().preparePut(commonspec.getURL() + element).setHeader("Content-Type","application/json").setBody(readElement).build();
+	ListenableFuture<Response> response = commonspec.getClient().executeRequest(request);
+	commonspec.setResponse(element, response.get());
+    }
+    
     @When("^I try to delete a '(.*?)' with name '(.*?)'.$")
     public void deleteElementWithName(String element, String expectedName) throws IOException, InterruptedException, ExecutionException {
 	String name = expectedName;
@@ -180,5 +197,5 @@ public class WhenSpec extends BaseSpec {
 	ListenableFuture<Response> response = commonspec.getClient().executeRequest(request);
 	commonspec.setResponse(element, response.get());
     }
-    
+
 }

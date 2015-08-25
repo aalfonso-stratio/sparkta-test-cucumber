@@ -21,7 +21,7 @@ public class HookSpec extends BaseSpec {
         commonspec.getLogger().info("Starting a REST client");
 
         String host = System.getProperty("SPARKTA_HOST", "localhost");
-        String port = System.getProperty("SPARKTA_PORT", "9090");
+        String port = System.getProperty("SPARKTA_PORT", "9091");
         commonspec.setURL("http://" + host + ":" + port + "/");
 
         commonspec.setClient(new AsyncHttpClient(new AsyncHttpClientConfig.Builder().setAllowPoolingConnection(false)

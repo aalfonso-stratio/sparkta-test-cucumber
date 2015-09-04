@@ -5,7 +5,7 @@ Feature: Test all PUT operations for fragments in Sparkta Swagger API
 		When I try to update a 'fragment' with 'null'
 		Then the service response status must be '400' and its response must contain the text 'Request entity expected but not supplied'
 
-	Scenario: Update a fragment when no policies available
+	Scenario: Update a fragment when no fragments available
 		When I try to update a 'fragment' with 'fragmentExample'
 		Then the service response status must be '404'.
 		
@@ -32,17 +32,13 @@ Feature: Test all PUT operations for fragments in Sparkta Swagger API
 		When I try to update a 'fragment' with 'invalidFragmentNoShortDescription'	
 		Then the service response status must be '400' and its response must contain the text 'No usable value for shortDescription'
 			
-	Scenario: Update a fragment with missing icon
-		When I try to update a 'fragment' with 'invalidFragmentNoIcon'	
-		Then the service response status must be '400' and its response must contain the text 'No usable value for icon'
-	
 	Scenario: Update a fragment with missing element
 		When I try to update a 'fragment' with 'invalidFragmentNoElement'	
 		Then the service response status must be '400' and its response must contain the text 'No usable value for element'
 	
 	Scenario: Update a fragment with incorrect type
 		When I try to update a 'fragment' with 'invalidFragmentIncorrectType'	
-		Then the service response status must be '404' and its response must contain the text 'The fragment type must be input|output'	
+		Then the service response status must be '500' and its response must contain the text 'The fragment type must be input|output'	
 	
 	Scenario: Update a existing fragment
 		When I try to update a 'fragment' with 'fragmentExampleUpdate'	

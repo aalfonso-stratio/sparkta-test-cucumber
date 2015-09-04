@@ -6,6 +6,10 @@ import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.testng.Assert;
+
 import com.ning.http.client.ListenableFuture;
 import com.ning.http.client.Request;
 import com.ning.http.client.Response;
@@ -120,7 +124,7 @@ public class WhenSpec extends BaseSpec {
 	    name = defaultProps.getProperty(expectedName);
 	}
 	
-        Future<Response> response = commonspec.getClient().prepareGet(commonspec.getURL() + element + "/" + type + "/" + name).execute();
+        Future<Response> response = commonspec.getClient().prepareGet(commonspec.getURL() + element + "/" + type + "/name/" + name).execute();
 
         commonspec.setResponse(element, response.get());
     }
@@ -163,22 +167,28 @@ public class WhenSpec extends BaseSpec {
     public void deleteElementOfTypeWithName(String element, String expectedType, String expectedName) throws IOException, InterruptedException, ExecutionException {
 	String type = expectedType;
 	String name = expectedName;
+	String id;
 	
 	if (expectedType.equals("null")) {
 	    type = "";
 	}
 	
 	if (expectedName.equals("null")) {
-	    name = "";
+	    id = "";
+	} else if (expectedName.equals("invalid")) {
+	    id = "invalid";
 	} else {
 	    Properties defaultProps = new Properties();
 	    defaultProps.load(new FileInputStream(element + ".properties"));
 	    name = defaultProps.getProperty(expectedName);
-	}
+	    Future<Response> responseGET = commonspec.getClient().prepareGet(commonspec.getURL() + element + "/" + type + "/name/" + name).execute();
+	    String responseBody = responseGET.get().getResponseBody();
 	
-	Future<Response> response = commonspec.getClient().prepareDelete(commonspec.getURL() + element + "/" + type + "/" + name).execute();
-
-        commonspec.setResponse(element, response.get());
+	    JSONObject bodyJson = new JSONObject(responseBody);
+	    id = bodyJson.getString("id");
+	}
+	Future<Response> response = commonspec.getClient().prepareDelete(commonspec.getURL() + element + "/" + type + "/" + id).execute();
+	commonspec.setResponse(element, response.get());
     }
     
     @When("^I create '(.*?)' with '(.*?)'$")

@@ -1,6 +1,8 @@
 package com.stratio.sparkta.specs;
 
-public class BaseSpec {
+import com.stratio.specs.BaseGSpec;
+
+public class BaseSpec extends BaseGSpec{
 
     protected Common commonspec;
 

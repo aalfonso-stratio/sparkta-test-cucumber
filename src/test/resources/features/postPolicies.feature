@@ -17,13 +17,13 @@ Feature: Test all POST operations for policies in Sparkta Swagger API
 
 	Scenario: Add a policy with non-existing fragment
 		When I create 'policy' with 'policyExampleNonExistingFragment'
-		Then the service response status must be '404' and its response must contain the text 'KeeperErrorCode = NoNode for /stratio/sparkta/fragments/input/myFragment'
+		Then the service response status must be '500' and its response must contain the text 'KeeperErrorCode = NoNode for /stratio/sparkta/fragments/input/myFragment'
 
 	Scenario: Add a policy with 2 existing input fragments
 		Given I create 'fragment' with 'fragmentExample'
 		And I create 'fragment' with 'fragmentExample2'
 		When I create 'policy' with 'policyExampleTwoFragments'
-		Then the service response status must be '404' and its response must contain the text 'Only one input is allowed in the policy.'
+		Then the service response status must be '500' and its response must contain the text 'Only one input is allowed in the policy.'
 	
 	Scenario: Add a policy with existing input fragment 
 		When I create 'policy' with 'policyExampleOneFragment'
@@ -41,15 +41,15 @@ Feature: Test all POST operations for policies in Sparkta Swagger API
 	
 	Scenario: Add a policy with input and one input fragment
 		When I create 'policy' with 'policyOneInputOneFragment'
-		Then the service response status must be '404' and its response must contain the text 'Only one input is allowed in the policy.'
+		Then the service response status must be '500' and its response must contain the text 'Only one input is allowed in the policy.'
 	
 	Scenario: Add a policy with missing input
 		When I create 'policy' with 'policyNoInput'
-		Then the service response status must be '404' and its response must contain the text 'It is mandatory to define one input in the policy.'
+		Then the service response status must be '500' and its response must contain the text 'It is mandatory to define one input in the policy.'
 	
 	Scenario: Add a policy with missing outputs
 		When I create 'policy' with 'policyNoOutputs'
-		Then the service response status must be '404' and its response must contain the text 'It is mandatory to define at least one output in the policy.'
+		Then the service response status must be '500' and its response must contain the text 'It is mandatory to define at least one output in the policy.'
 	
 	Scenario: Add a policy with missing name inside cubes
 		When I create 'policy' with 'policyMissingCubesName'
@@ -67,7 +67,7 @@ Feature: Test all POST operations for policies in Sparkta Swagger API
 	# This test will fail, as at the moment there is no validation
 	Scenario: Add a policy with missing cubes
 		When I create 'policy' with 'policyNoCubes'
-		Then the service response status must be '404' and its response must contain the text 'It is mandatory to define one cube in the policy.'
+		Then the service response status must be '500' and its response must contain the text 'It is mandatory to define one cube in the policy.'
 
 	# Policy incorrectly created with default name
 	# This test will fail

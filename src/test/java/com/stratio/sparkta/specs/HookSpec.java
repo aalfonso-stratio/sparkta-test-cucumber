@@ -16,21 +16,21 @@ public class HookSpec extends BaseSpec {
         this.commonspec = spec;
     }
 
-    @Before(order = 10, value = "@rest")
-    public void restClientSetup() throws Exception {
-        commonspec.getLogger().info("Starting a REST client");
-
-        String host = System.getProperty("SPARKTA_HOST", "localhost");
-        String port = System.getProperty("SPARKTA_PORT", "9091");
-        commonspec.setURL("http://" + host + ":" + port + "/");
-
-        commonspec.setClient(new AsyncHttpClient(new AsyncHttpClientConfig.Builder().setAllowPoolingConnection(false)
-                .build()));        
-    }
- 
-    @After(order = 10, value = "@rest")
-    public void restClientTeardown() throws IOException {
-        commonspec.getLogger().info("Shutting down REST client");
-        commonspec.getClient().close();
-    }
+//    @Before(order = 10, value = "@rest")
+//    public void restClientSetup() throws Exception {
+//        commonspec.getLogger().info("Starting a REST client");
+//
+//        String host = System.getProperty("SPARKTA_HOST", "localhost");
+//        String port = System.getProperty("SPARKTA_PORT", "9091");
+//        commonspec.setURL("http://" + host + ":" + port + "/");
+//
+//        commonspec.setClient(new AsyncHttpClient(new AsyncHttpClientConfig.Builder().setAllowPoolingConnection(false)
+//                .build()));        
+//    }
+// 
+//    @After(order = 10, value = "@rest")
+//    public void restClientTeardown() throws IOException {
+//        commonspec.getLogger().info("Shutting down REST client");
+//        commonspec.getClient().close();
+//    }
 }

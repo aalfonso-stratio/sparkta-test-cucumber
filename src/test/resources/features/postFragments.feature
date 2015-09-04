@@ -21,17 +21,13 @@ Feature: Test all POST operations for fragments in Sparkta Swagger API
 		When I create 'fragment' with 'invalidFragmentNoShortDescription'	
 		Then the service response status must be '400' and its response must contain the text 'No usable value for shortDescription'
 			
-	Scenario: Add a fragment with missing icon
-		When I create 'fragment' with 'invalidFragmentNoIcon'	
-		Then the service response status must be '400' and its response must contain the text 'No usable value for icon'
-	
 	Scenario: Add a fragment with missing element
 		When I create 'fragment' with 'invalidFragmentNoElement'	
 		Then the service response status must be '400' and its response must contain the text 'No usable value for element'
 	
 	Scenario: Add a fragment with incorrect type
 		When I create 'fragment' with 'invalidFragmentIncorrectType'	
-		Then the service response status must be '404' and its response must contain the text 'The fragment type must be input|output'
+		Then the service response status must be '500' and its response must contain the text 'The fragment type must be input|output'
 	
 	Scenario: Add a valid input fragment
 		When I create 'fragment' with 'validInputFragment'	

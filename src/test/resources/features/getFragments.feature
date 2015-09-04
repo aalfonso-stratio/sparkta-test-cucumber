@@ -1,63 +1,73 @@
 @rest
 Feature: Test all GET operations for fragments in Sparkta Swagger API
+	
+	Background: Setup Sparkta REST client
+		Given I send requests to 'localhost':'9091'
 		
-	Scenario: Get all available fragments of type null
-		When I try to get all available 'fragment' of type 'null'	
+	Scenario: Get all available fragments with empty type
+		When I send a 'GET' request to 'fragment/'
 		Then the service response status must be '404' and its response must contain the text 'The requested resource could not be found.'
 	
 	Scenario: Get all available fragments of type invalid
-		When I try to get all available 'fragment' of type 'invalid'	
-		Then the service response status must be '404' and its response must contain the text 'The fragment type must be input|output'
+		When I send a 'GET' request to 'fragment/invalid'	
+		Then the service response status must be '500' and its response must contain the text 'The fragment type must be input|output'
 	
 	Scenario: Get all available fragments of type input with no fragments
-		When I try to get all available 'fragment' of type 'input'	
+		When I send a 'GET' request to 'fragment/input'
 		Then the service response status must be '200' and its response must contain the text '[]'
 		
 	Scenario: Get all available fragments of type output with no fragments
-		When I try to get all available 'fragment' of type 'output'	
+		When I send a 'GET' request to 'fragment/output'
 		Then the service response status must be '200' and its response must contain the text '[]'
 	
-	Scenario: Get all available fragments of type null with name null
-		When I try to get 'fragment' of type 'null' with name 'invalid'
+	Scenario: Get all available fragments with empty type and with name name
+		When I send a 'GET' request to 'fragment//name'
 		Then the service response status must be '404' and its response must contain the text 'The requested resource could not be found.'
 	
-	Scenario: Get all available fragments of type input with name null
-		When I try to get 'fragment' of type 'input' with name 'null'
+	Scenario: Get all available fragments of type input with empty name
+		When I send a 'GET' request to 'fragment/input/'
 		Then the service response status must be '404' and its response must contain the text 'The requested resource could not be found.'
 	
-	Scenario: Get all available fragments of type null with name null
-		When I try to get 'fragment' of type 'null' with name 'null'
+	Scenario: Get all available fragments with empty type and with empty name
+		When I send a 'GET' request to 'fragment//'
 		Then the service response status must be '404' and its response must contain the text 'The requested resource could not be found.'
 	
 	Scenario: Get all available fragments of type invalid with name name
-		When I try to get 'fragment' of type 'invalid' with name 'name'
-		Then the service response status must be '404' and its response must contain the text 'The fragment type must be input|output'
+		When I send a 'GET' request to 'fragment/invalid/name'
+		Then the service response status must be '500' and its response must contain the text 'The fragment type must be input|output'
 	
 	Scenario: Get all available fragments of type input with name name
-		When I try to get 'fragment' of type 'input' with name 'name'
-		Then the service response status must be '404'.
+		When I send a 'GET' request to 'fragment/input/name/name'
+		Then the service response status must be '500'.
 		
 	Scenario: Get all available fragments of type output with name name
-		When I try to get 'fragment' of type 'output' with name 'name'
-		Then the service response status must be '404'.
+		When I send a 'GET' request to 'fragment/output/name/name'
+		Then the service response status must be '500'.
 		
 	Scenario: Get all available fragments of type input
-		Given I create 'fragment' with 'validInputFragment'
-		When I try to get all available 'fragment' of type 'input'
+		Given I send a 'POST' request to 'fragment' based on 'schemas/fragments/fragment.conf' as 'json' with:
+		| id | DELETE | N/A |
+		| name | UPDATE | inputFragment1 |
+		| fragmentType | UPDATE | input |
+		When I send a 'GET' request to 'fragment/input'
 		Then the service response status must be '200' and its response length must be '1'
 	
 	Scenario: Get all available fragments of type output
-		Given I create 'fragment' with 'validOutputFragment'
-		When I try to get all available 'fragment' of type 'output'
+		Given I send a 'POST' request to 'fragment' based on 'schemas/fragments/fragment.conf' as 'json' with:
+		| id | DELETE | N/A |
+		| name | UPDATE | outputFragment1 |
+		| fragmentType | UPDATE | output |
+		When I send a 'GET' request to 'fragment/output'
 		Then the service response status must be '200' and its response length must be '1'
 		
-	Scenario: Get all available fragments of type input with name twitter
-		When I try to get 'fragment' of type 'input' with name 'validInputFragmentName'
+	Scenario: Get all available fragments of type input with name inputFragment1
+		When I send a 'GET' request to 'fragment/input/name/inputFragment1'
 		Then the service response status must be '200'.
 		
-	Scenario: Get all available fragments of type output with name output
-		When I try to get 'fragment' of type 'output' with name 'validOutputFragmentName'
+	Scenario: Get all available fragments of type output with name outputFragment1
+		When I send a 'GET' request to 'fragment/output/name/outputFragment1'
 		Then the service response status must be '200'.
 	
 	Scenario: Clean everything up
-		Given I have finished feature
+		When I send a 'GET' request to 'fragment/input/name/inputFragment1'
+		Given I save element '$.id' in attribute 'previousFragmentID'

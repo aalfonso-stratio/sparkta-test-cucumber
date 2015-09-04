@@ -15,7 +15,7 @@ Feature: Test all DELETE operations for fragments in Sparkta Swagger API
 	
 	Scenario: Delete a fragment with type invalid and name invalid with empty list
 		When I try to delete a 'fragment' of type 'invalid' with name 'invalid'	
-		Then the service response status must be '404'.
+		Then the service response status must be '500'.
 		
 	Scenario: Delete a fragment with type input and name invalid with empty list
 		When I try to delete a 'fragment' of type 'input' with name 'invalid'	

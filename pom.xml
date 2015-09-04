@@ -6,8 +6,7 @@
   </properties>
   
   <groupId>com.stratio.sparkta</groupId>
-  <artifactId>sparkta-test-cucumber</artifactId>
-  <packaging>jar</packaging>
+  <artifactId>sparkta-test</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>sparkta-test-cucumber</name>
   
@@ -86,11 +85,6 @@
 		<artifactId>log4j-1.2-api</artifactId>
 		<version>2.0</version>
 	</dependency>
-	<dependency>
-		<groupId>org.subethamail</groupId>
-		<artifactId>subethasmtp</artifactId>
-		<version>3.1.7</version>
-	</dependency> 
   </dependencies>
   
 </project>

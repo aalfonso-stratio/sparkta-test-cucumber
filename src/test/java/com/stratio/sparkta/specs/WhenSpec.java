@@ -13,15 +13,35 @@ import org.testng.Assert;
 import com.ning.http.client.ListenableFuture;
 import com.ning.http.client.Request;
 import com.ning.http.client.Response;
+import com.stratio.specs.CommonG;
 
 import cucumber.api.java.en.When;
 
 public class WhenSpec extends BaseSpec {
+
+    public WhenSpec(CommonG spec) {
+	this.commonspec = spec;
+    }
     
-    public WhenSpec(Common spec) {
-        this.commonspec = spec;
+    @When("^I delete fragment in '(.+?)'$")
+    public void deleteElement(String endPoint) throws Exception {
+
+	String restURL = commonspec.getURL();
+	if (restURL == null) {
+	    restURL = commonspec.getRestURL();
+	    if (restURL == null) {
+		throw new Exception("Application URL has not been set");
+	    }
+	}
+	    
+	commonspec.getLogger().info("Trying to delete fragment with id: {}", Common.previousFragmentID);
+	Future<Response> response = commonspec.getClient().prepareDelete(restURL + endPoint + Common.previousFragmentID).execute();
+
+        commonspec.setResponse("fragment", response.get());
     }
 
+    
+    
     @When("^I try to get all available policies$")
     public void getAllPolicies() throws IOException, InterruptedException, ExecutionException {
         Future<Response> response = commonspec.getClient().prepareGet(commonspec.getURL() + "policy/all").execute();

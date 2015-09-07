@@ -15,7 +15,7 @@ import cucumber.api.java.en.Given;
 public class GivenSpec extends BaseSpec {
    
     public GivenSpec(Common spec) {
-        this.commonspec = spec;
+	this.commonspec = spec;
     }
     
     @Given("^I have finished feature in '([^:]+?)':'([^:]+?)'$")
@@ -81,4 +81,5 @@ public class GivenSpec extends BaseSpec {
 	    }
 	}
     }
+    
 }

@@ -23,8 +23,25 @@ public class WhenSpec extends BaseSpec {
 	this.commonspec = spec;
     }
     
+    @When("^I delete policy in '(.+?)'$")
+    public void deletePolicy(String endPoint) throws Exception {
+
+	String restURL = commonspec.getURL();
+	if (restURL == null) {
+	    restURL = commonspec.getRestURL();
+	    if (restURL == null) {
+		throw new Exception("Application URL has not been set");
+	    }
+	}
+	    
+	commonspec.getLogger().info("Trying to delete policy with id: {}", Common.previousFragmentID);
+	Future<Response> response = commonspec.getClient().prepareDelete(restURL + endPoint + Common.previousPolicyID).execute();
+
+        commonspec.setResponse("policy", response.get());
+    }
+    
     @When("^I delete fragment in '(.+?)'$")
-    public void deleteElement(String endPoint) throws Exception {
+    public void deleteFragment(String endPoint) throws Exception {
 
 	String restURL = commonspec.getURL();
 	if (restURL == null) {

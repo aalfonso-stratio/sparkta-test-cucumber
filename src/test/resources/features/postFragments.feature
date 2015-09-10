@@ -5,7 +5,7 @@ Feature: Test all POST operations for fragments in Sparkta Swagger API
 		Given I send requests to 'localhost':'9091'
 
 	Scenario: Add a fragment with empty parameter
-		Given I send a 'POST' request to 'fragment' as json with empty data
+		Given I send a 'POST' request to 'fragment' as 'json'
 		Then the service response status must be '400' and its response must contain the text 'Request entity expected but not supplied'
 
 	Scenario: Add a fragment with missing name
@@ -65,8 +65,12 @@ Feature: Test all POST operations for fragments in Sparkta Swagger API
 
 	Scenario: Clean everything up
 		When I send a 'GET' request to 'fragment/input/name/inputfragment1'
-		Given I save element '$.id' in attribute 'previousFragmentID'
-		When I delete fragment in 'fragment/input/'
+		Then the service response status must be '200'.
+		And I save element '$.id' in attribute 'previousFragmentID'
+		When I send a 'DELETE' request to 'fragment/input/!{previousFragmentID}'
+		Then the service response status must be '200'.
 		When I send a 'GET' request to 'fragment/output/name/outputfragment1'
-		Given I save element '$.id' in attribute 'previousFragmentID'
-		When I delete fragment in 'fragment/output/'
+		Then the service response status must be '200'.
+		And I save element '$.id' in attribute 'previousFragmentID'
+		When I send a 'DELETE' request to 'fragment/output/!{previousFragmentID}'
+		Then the service response status must be '200'.

@@ -1,61 +1,143 @@
 @rest
 Feature: Test all POST operations for policyContexts in Sparkta Swagger API
 
+	Background: Setup Sparkta REST client
+		Given I send requests to 'localhost':'9091'
+
 	Scenario: Add a policyContext with empty parameter
-		When I create 'policyContext' with 'null'	
+		When I send a 'POST' request to 'policyContext' as 'json'
 		Then the service response status must be '400' and its response must contain the text 'Request entity expected but not supplied'
 	
+	# This test should fail
 	Scenario: Add a policyContext with no name
-		When I create 'policyContext' with 'policyNoName'	
-		Then the service response status must be '404' and its response must contain the text 'No usable value for name'
-		# Delete incorrectly created policyContext
-		When I try to delete a 'policyContext' with name 'defaultName'.
-		Then the service response status must be '200'.
+		Given I send a 'POST' request to 'policyContext' based on 'schemas/policies/policy.conf' as 'json' with:
+		| name | DELETE | N/A |
+		| fragments | DELETE | N/A |
+		| id | DELETE | N/A |
+		Then the service response status must be '500' and its response must contain the text 'No usable value for name'
 	
 	Scenario: Add a policyContext with no input
-		When I create 'policyContext' with 'policyNoInput'	
-		Then the service response status must be '404' and its response must contain the text 'It is mandatory to define one input in the policy.'
+		Given I send a 'POST' request to 'policyContext' based on 'schemas/policies/policy.conf' as 'json' with:
+		| name | UPDATE | policyContextNoInput |
+		| fragments | DELETE | N/A |
+		| id | DELETE | N/A |
+		| input | DELETE | N/A |	
+		Then the service response status must be '500' and its response must contain the text 'It is mandatory to define one input in the policy.'
 		
-	
 	Scenario: Add a policyContext with no outputs
-		When I create 'policyContext' with 'policyNoOutputs'	
-		Then the service response status must be '404' and its response must contain the text 'It is mandatory to define at least one output in the policy.'
+		Given I send a 'POST' request to 'policyContext' based on 'schemas/policies/policy.conf' as 'json' with:
+		| name | UPDATE | policyContextNoOutputs |
+		| fragments | DELETE | N/A |
+		| id | DELETE | N/A |
+		| outputs | DELETE | N/A |	
+		Then the service response status must be '500' and its response must contain the text 'It is mandatory to define at least one output in the policy.'
 		
 	Scenario: Add a policyContext with no cubes
-		When I create 'policyContext' with 'policyNoCubes'	
+		Given I send a 'POST' request to 'policyContext' based on 'schemas/policies/policy.conf' as 'json' with:
+		| name | UPDATE | policyContextNoCubes |
+		| fragments | DELETE | N/A |
+		| id | DELETE | N/A |
+		| cubes | DELETE | N/A |	
 		Then the service response status must be '400' and its response must contain the text 'error: array is too short: must have at least 1 elements but instance has 0 elements'
 	
-	Scenario: Add a policyContext
-		When I create 'policyContext' with 'policyExample'	
-		Then the service response status must be '200'.
-			
 	Scenario: Add a policyContext with non-existing fragment
-		When I create 'policyContext' with 'policyExampleNonExistingFragment'	
-		Then the service response status must be '404' and its response must contain the text 'KeeperErrorCode = NoNode for /stratio/sparkta/fragments/input/myFragment'
+		When I send a 'POST' request to 'policyContext' based on 'schemas/policies/policy.conf' as 'json' with:
+		| name | UPDATE | policyContextNonExistingFragment |
+		| fragments[1] | DELETE | N/A |
+		| fragments[0].id | DELETE | N/A |
+		| id | DELETE | N/A |	
+		Then the service response status must be '500'.
 		
 	Scenario: Add a policy context with 2 existing input fragments
-		Given I create 'fragment' with 'fragmentExample'	
-		Then the service response status must be '201'.
-		Given I create 'fragment' with 'fragmentExample2'	
-		Then the service response status must be '201'.
-		When I create 'policyContext' with 'policyExampleTwoFragments'	
-		Then the service response status must be '404' and its response must contain the text 'Only one input is allowed in the policy.'
+		# Create first input fragment
+		Given I send a 'POST' request to 'fragment' based on 'schemas/fragments/fragment.conf' as 'json' with:
+		| id | DELETE | N/A |
+		| name | UPDATE | inputfragment1 |
+		| fragmentType | UPDATE | input |
+		Then the service response status must be '200'.
+		And I save element '$.id' in attribute 'previousFragmentID'
+		# Create second input fragment
+		Given I send a 'POST' request to 'fragment' based on 'schemas/fragments/fragment.conf' as 'json' with:
+		| id | DELETE | N/A |
+		| name | UPDATE | inputfragment2 |
+		| fragmentType | UPDATE | input |
+		Then the service response status must be '200'.
+		And I save element '$.id' in attribute 'previousFragmentID_2'
+		# Create policy referencing these input fragments
+		When I send a 'POST' request to 'policyContext' based on 'schemas/policies/policy.conf' as 'json' with:
+		| name | UPDATE | policyContext2InputFragments |
+		| fragments[0].id | UPDATE | !{previousFragmentID} |
+		| fragments[0].name | UPDATE | inputfragment1 |
+		| fragments[0].fragmentType | UPDATE | input |
+		| fragments[1].id | UPDATE | !{previousFragmentID_2} |
+		| fragments[1].name | UPDATE | inputfragment2 |
+		| fragments[1].fragmentType | UPDATE | input |
+		| id | DELETE | N/A |
+		| input | DELETE | N/A |
+		Then the service response status must be '500' and its response must contain the text 'Only one input is allowed in the policy.'
+
+	Scenario: Add a policy context with input and one input fragment
+		When I send a 'POST' request to 'policyContext' based on 'schemas/policies/policy.conf' as 'json' with:
+		| name | UPDATE | policyContext1Input1Fragment |
+		| fragments[0].id | UPDATE | !{previousFragmentID} |
+		| fragments[0].name | UPDATE | inputfragment1 |
+		| fragments[0].fragmentType | UPDATE | input |
+		| fragments[1] | DELETE | N/A |
+		| id | DELETE | N/A |
+		Then the service response status must be '500' and its response must contain the text 'Only one input is allowed in the policy.'
+	
+	Scenario: Add a policyContext
+		When I send a 'POST' request to 'policyContext' based on 'schemas/policies/policy.conf' as 'json' with:
+		| name | UPDATE | policyContextValid |
+		| fragments | DELETE | N/A |
+		| id | DELETE | N/A |
+		Then the service response status must be '200'.
 		
 	Scenario: Add a policyContext with existing fragment
-		When I create 'policyContext' with 'policyExampleOneFragment'	
+		When I send a 'POST' request to 'policyContext' based on 'schemas/policies/policy.conf' as 'json' with:
+		| name | UPDATE | policyContext1InputFragment |
+		| fragments[0].id | UPDATE | !{previousFragmentID} |
+		| fragments[0].name | UPDATE | inputfragment1 |
+		| fragments[0].fragmentType | UPDATE | input |
+		| fragments[1] | DELETE | N/A |
+		| id | DELETE | N/A |
+		| input | DELETE | N/A |
 		Then the service response status must be '200' and its response must contain the text 'Creating new context with name'
+		# Delete fragments
+		When I send a 'DELETE' request to 'fragment/input/!{previousFragmentID}'
+		Then the service response status must be '200'.
+		When I send a 'DELETE' request to 'fragment/input/!{previousFragmentID_2}'
+		Then the service response status must be '200'.
 	
 	Scenario: Add a policy context with 2 existing output fragments
-		Given I create 'fragment' with 'fragmentOutputExample'	
-		Then the service response status must be '201'.
-		Given I create 'fragment' with 'fragmentOutputExample2'	
-		Then the service response status must be '201'.
-		When I create 'policyContext' with 'policyExampleTwoOutputFragments'	
+		# Create first output fragment
+		Given I send a 'POST' request to 'fragment' based on 'schemas/fragments/fragment.conf' as 'json' with:
+		| id | DELETE | N/A |
+		| name | UPDATE | outputfragment1 |
+		| fragmentType | UPDATE | output |
+		Then the service response status must be '200'.
+		And I save element '$.id' in attribute 'previousFragmentID'
+		# Create second output fragment
+		Given I send a 'POST' request to 'fragment' based on 'schemas/fragments/fragment.conf' as 'json' with:
+		| id | DELETE | N/A |
+		| name | UPDATE | outputfragment2 |
+		| fragmentType | UPDATE | output |
+		Then the service response status must be '200'.
+		And I save element '$.id' in attribute 'previousFragmentID_2'
+		# Create policy using these output fragments
+		When I send a 'POST' request to 'policyContext' based on 'schemas/policies/policy.conf' as 'json' with:
+		| fragments[0].id | UPDATE | !{previousFragmentID} |
+		| fragments[0].name | UPDATE | outputfragment1 |
+		| fragments[0].fragmentType | UPDATE | output |
+		| fragments[1].id | UPDATE | !{previousFragmentID_2} |
+		| fragments[1].name | UPDATE | outputfragment2 |
+		| fragments[1].fragmentType | UPDATE | output |
+		| id | DELETE | N/A |
+		| outputs | DELETE | N/A |
+		| name | UPDATE | policyContextTwoOutputFragment |	
 		Then the service response status must be '200' and its response must contain the text 'Creating new context with name'
-	
-	Scenario: Add a policy context with input and one input fragment
-		When I create 'policyContext' with 'policyOneInputOneFragment'	
-		Then the service response status must be '404' and its response must contain the text 'Only one input is allowed in the policy.'
-		
-	Scenario: Clean everything up
-		Given I have finished feature
+		# Delete fragments
+		When I send a 'DELETE' request to 'fragment/output/!{previousFragmentID}'
+		Then the service response status must be '200'.
+		When I send a 'DELETE' request to 'fragment/output/!{previousFragmentID_2}'
+		Then the service response status must be '200'.

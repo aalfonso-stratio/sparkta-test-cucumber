@@ -10,7 +10,7 @@ Feature: Test all GET operations for policies in Sparkta Swagger API
 	
 	Scenario: Get a policy by name when none available
 		When I send a 'GET' request to 'policy/findByName/nonExistingPolicy'
-		Then the service response status must be '500'.
+		Then the service response status must be '404'.
 	
 	Scenario: Get a policy by id when none available
 		When I send a 'GET' request to 'policy/find/nonExistingId'
@@ -26,7 +26,7 @@ Feature: Test all GET operations for policies in Sparkta Swagger API
 
 	Scenario: Get a non-existing policy by name when policies are available
 		When I send a 'POST' request to 'policy' based on 'schemas/policies/policy.conf' as 'json' with:
-		| name | UPDATE | basicPolicy |
+		| name | UPDATE | basicpolicy |
 		| fragments | DELETE | N/A |
 		| id | DELETE | N/A |
 		Then the service response status must be '200'.
@@ -39,7 +39,7 @@ Feature: Test all GET operations for policies in Sparkta Swagger API
 		Then the service response status must be '404'.
 	
 	Scenario: Get a existing policy by name
-		When I send a 'GET' request to 'policy/findByName/policy1'
+		When I send a 'GET' request to 'policy/findByName/basicpolicy'
 		Then the service response status must be '200'.
 		# Should check that value returned is the expected policy
 		
@@ -90,7 +90,7 @@ Feature: Test all GET operations for policies in Sparkta Swagger API
 		
 	Scenario: Get all policies with policies available
 		When I send a 'GET' request to 'policy/all'	
-		Then the service response status must be '200' and its response length must be '2'
+		Then the service response status must be '200' and its response length must be '3'
 
 	Scenario: Run a policy with 2 existing output fragments
 		# Create output fragment 2
@@ -105,10 +105,11 @@ Feature: Test all GET operations for policies in Sparkta Swagger API
 		| fragments[0].id | UPDATE | !{previousFragmentID} |
 		| fragments[0].name | UPDATE | outputfragment1 |
 		| fragments[0].fragmentType | UPDATE | output |
-		| fragments[0].id | UPDATE | !{previousFragmentID_2} |
-		| fragments[0].name | UPDATE | outputfragment2 |
-		| fragments[0].fragmentType | UPDATE | output |
+		| fragments[1].id | UPDATE | !{previousFragmentID_2} |
+		| fragments[1].name | UPDATE | outputfragment2 |
+		| fragments[1].fragmentType | UPDATE | output |
 		| id | DELETE | N/A |
+		| outputs | DELETE | N/A |
 		| name | UPDATE | policyTwoOutputFragment |
 		Then the service response status must be '200'.
 		And I save element '$.id' in attribute 'previousPolicyID_2'
@@ -141,7 +142,11 @@ Feature: Test all GET operations for policies in Sparkta Swagger API
 		Then the service response status must be '404' and its response must contain the text 'The requested resource could not be found.'
 		
 	Scenario: Clean everything up
-		When I send a 'DELETE' request to 'fragment/!{previousFragmentID}'
+		When I send a 'DELETE' request to 'policy/!{previousPolicyID}'
 		Then the service response status must be '200'.
-		When I send a 'DELETE' request to 'fragment/!{previousFragmentID_2}'
+		When I send a 'DELETE' request to 'policy/!{previousPolicyID_2}'
+		Then the service response status must be '200'.
+		When I send a 'DELETE' request to 'fragment/output/!{previousFragmentID}'
+		Then the service response status must be '200'.
+		When I send a 'DELETE' request to 'fragment/output/!{previousFragmentID_2}'
 		Then the service response status must be '200'.

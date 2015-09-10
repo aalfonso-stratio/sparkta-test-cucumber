@@ -7,10 +7,10 @@ import com.stratio.tests.utils.BaseTest;
 
 import cucumber.api.CucumberOptions;
 
-@CucumberOptions(features = { "src/test/resources/features/deletePolicyContexts.feature" })
-public class Delete extends BaseTest {
+@CucumberOptions(features = { "src/test/resources/features/putPolicyContexts.feature" })
+public class Put extends BaseTest {
 
-    public Delete() {
+    public Put() {
     }
 
     @Test(enabled = true)

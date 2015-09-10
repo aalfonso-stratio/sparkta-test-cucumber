@@ -5,7 +5,7 @@ Feature: Test all PUT operations for fragments in Sparkta Swagger API
 		Given I send requests to 'localhost':'9091'
 		
 		Scenario: Update a fragment using empty parameter
-		Given I send a 'PUT' request to 'fragment' as json with empty data
+		Given I send a 'PUT' request to 'fragment' as 'json'
 		Then the service response status must be '400' and its response must contain the text 'Request entity expected but not supplied'
 
 	Scenario: Update a fragment when no fragments available

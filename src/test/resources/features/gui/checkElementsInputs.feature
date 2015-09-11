@@ -13,3 +13,7 @@ Feature: Test all expected elements are present in Sparkta GUI for inputs
 		Then '1' elements exists with 'css:button[data-ng-click="inputs.createInput()"]'
 		Then '1' elements exists with 'css:select[data-ng-model="inputs.filters.element.type"]'
 		Then '1' elements exists with 'css:input[data-ng-model="inputs.filters.name"]'
+		
+		Given '1' elements exists with 'css:button[data-ng-click="inputs.createInput()"]'
+		When I click on the element on index '0'
+		Then I wait '2' seconds

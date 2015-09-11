@@ -9,6 +9,7 @@ Feature: Test all POST operations for policyContexts in Sparkta Swagger API
 		Then the service response status must be '400' and its response must contain the text 'Request entity expected but not supplied'
 	
 	# This test should fail
+	# Issue: 835
 	Scenario: Add a policyContext with no name
 		Given I send a 'POST' request to 'policyContext' based on 'schemas/policies/policy.conf' as 'json' with:
 		| name | DELETE | N/A |

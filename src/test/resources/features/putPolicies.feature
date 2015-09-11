@@ -33,6 +33,9 @@ Feature: Test all PUT operations for policies in Sparkta Swagger API
 		| id | UPDATE | nonExistingID |
 		Then the service response status must be '404'.
 
+	# There is no validation
+	# This test will fail
+	# Issue: 834
 	Scenario: Update a existing policy with invalid info: no input
 		When I send a 'PUT' request to 'policy' based on 'schemas/policies/policy.conf' as 'json' with:
 		| name | UPDATE | validpolicy |
@@ -41,6 +44,9 @@ Feature: Test all PUT operations for policies in Sparkta Swagger API
 		| input | DELETE | N/A |
 		Then the service response status must be '404' and its response must contain the text 'It is mandatory to define one input in the policy.'
 		
+	# There is no validation
+	# This test will fail
+	# Issue: 834
 	Scenario: Update a existing policy with invalid info: no outputs
 		When I send a 'PUT' request to 'policy' based on 'schemas/policies/policy.conf' as 'json' with:
 		| name | UPDATE | validpolicy |
@@ -49,6 +55,9 @@ Feature: Test all PUT operations for policies in Sparkta Swagger API
 		| outputs | DELETE | N/A |
 		Then the service response status must be '404' and its response must contain the text 'It is mandatory to define at least one output in the policy.'
 	
+	# There is no validation
+	# This test will fail
+	# Issue: 834
 	Scenario: Update a existing policy with invalid info: no cubes
 		When I send a 'PUT' request to 'policy' based on 'schemas/policies/policy.conf' as 'json' with:
 		| name | UPDATE | validpolicy |
@@ -57,6 +66,9 @@ Feature: Test all PUT operations for policies in Sparkta Swagger API
 		| cubes | DELETE | N/A |
 		Then the service response status must be '404' and its response must contain the text 'It is mandatory to define one cube in the policy.'
 	
+	# There is no validation
+	# This test will fail
+	# Issue: 834
 	Scenario: Update a existing policy with invalid info: one input and one input fragment
 		# Create fragment
 		Given I send a 'POST' request to 'fragment' based on 'schemas/fragments/fragment.conf' as 'json' with:
@@ -75,6 +87,9 @@ Feature: Test all PUT operations for policies in Sparkta Swagger API
 		| id | UPDATE | !{previousPolicyID} |
 		Then the service response status must be '404' and its response must contain the text 'Only one input is allowed in the policy.'
 	
+	# There is no validation
+	# This test will fail
+	# Issue: 834
 	Scenario: Update a policy with missing name inside cubes
 		When I send a 'PUT' request to 'policy' based on 'schemas/policies/policy.conf' as 'json' with:
 		| name | UPDATE | validpolicy |
@@ -83,6 +98,9 @@ Feature: Test all PUT operations for policies in Sparkta Swagger API
 		| cubes[0].name | DELETE | N/A |
 		Then the service response status must be '400' and its response must contain the text 'No usable value for name'
 		
+	# There is no validation
+	# This test will fail
+	# Issue: 834
 	Scenario: Update a policy with missing dimensions inside cubes
 		When I send a 'PUT' request to 'policy' based on 'schemas/policies/policy.conf' as 'json' with:
 		| name | UPDATE | validpolicy |

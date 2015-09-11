@@ -49,6 +49,8 @@ Feature: Test all GET operations for fragments in Sparkta Swagger API
 		| id | DELETE | N/A |
 		| name | UPDATE | inputfragment1 |
 		| fragmentType | UPDATE | input |
+		Then the service response status must be '200'.
+		And I save element '$.id' in attribute 'previousFragmentID'
 		When I send a 'GET' request to 'fragment/input'
 		Then the service response status must be '200' and its response length must be '1'
 	
@@ -57,6 +59,8 @@ Feature: Test all GET operations for fragments in Sparkta Swagger API
 		| id | DELETE | N/A |
 		| name | UPDATE | outputfragment1 |
 		| fragmentType | UPDATE | output |
+		Then the service response status must be '200'.
+		And I save element '$.id' in attribute 'previousFragmentID_2'
 		When I send a 'GET' request to 'fragment/output'
 		Then the service response status must be '200' and its response length must be '1'
 		
@@ -69,9 +73,7 @@ Feature: Test all GET operations for fragments in Sparkta Swagger API
 		Then the service response status must be '200'.
 	
 	Scenario: Clean everything up
-		When I send a 'GET' request to 'fragment/input/name/inputfragment1'
-		Given I save element '$.id' in attribute 'previousFragmentID'
-		When I delete fragment in 'fragment/input/'
-		When I send a 'GET' request to 'fragment/output/name/outputfragment1'
-		Given I save element '$.id' in attribute 'previousFragmentID'
-		When I delete fragment in 'fragment/output/'
+		When I send a 'DELETE' request to 'fragment/input/!{previousFragmentID}'
+		Then the service response status must be '200'.
+		When I send a 'DELETE' request to 'fragment/output/!{previousFragmentID_2}'
+		Then the service response status must be '200'.

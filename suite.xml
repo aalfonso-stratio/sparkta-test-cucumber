@@ -1,11 +1,19 @@
-<suite name="Suite1" verbose="10" parallel="instances"
+<suite name="Sparkta" verbose="10" parallel="instances"
 thread-count="1">
 <test name="swagger api">
 <packages>
-<!-- 	<package name="com.stratio.tests.templates" /> -->
-	<package name="com.stratio.tests.fragments" />
-	<package name="com.stratio.tests.policyContexts" />
-	<package name="com.stratio.tests.policies" />
+<!-- 	<package name="com.stratio.tests.api.templates" /> -->
+	<package name="com.stratio.tests.api.fragments" />
+	<package name="com.stratio.tests.api.policyContexts" />
+	<package name="com.stratio.tests.api.policies" />
+</packages>
+</test>
+<test name="swagger gui">
+<packages>
+ 	<package name="com.stratio.tests.gui.dashboard" />
+	<package name="com.stratio.tests.gui.inputs" />
+	<package name="com.stratio.tests.gui.outputs" />
+	<package name="com.stratio.tests.gui.policies" />
 </packages>
 </test>
 </suite>

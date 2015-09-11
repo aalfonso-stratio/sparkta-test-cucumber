@@ -1,4 +1,4 @@
-package com.stratio.tests.fragments;
+package com.stratio.tests.api.policies;
 
 import org.testng.annotations.Test;
 
@@ -7,14 +7,14 @@ import com.stratio.tests.utils.BaseTest;
 
 import cucumber.api.CucumberOptions;
 
-@CucumberOptions(features = { "src/test/resources/features/getFragments.feature" })
-public class Get extends BaseTest {
+@CucumberOptions(features = { "src/test/resources/features/api/postPolicies.feature" })
+public class Post extends BaseTest {
 
-    public Get() {
+    public Post() {
     }
 
     @Test(enabled = true)
-    public void fragmentsTest() throws Exception {
+    public void policiesTest() throws Exception {
         new CucumberRunner(this.getClass()).runCukes();
     }
 }

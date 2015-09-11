@@ -1,4 +1,4 @@
-package com.stratio.tests.policyContexts;
+package com.stratio.tests.api.fragments;
 
 import org.testng.annotations.Test;
 
@@ -7,10 +7,10 @@ import com.stratio.tests.utils.BaseTest;
 
 import cucumber.api.CucumberOptions;
 
-@CucumberOptions(features = { "src/test/resources/features/putPolicyContexts.feature" })
-public class Put extends BaseTest {
+@CucumberOptions(features = { "src/test/resources/features/api/postFragments.feature" })
+public class Post extends BaseTest {
 
-    public Put() {
+    public Post() {
     }
 
     @Test(enabled = true)

@@ -1,4 +1,4 @@
-package com.stratio.tests.policies;
+package com.stratio.tests.api.fragments;
 
 import org.testng.annotations.Test;
 
@@ -7,14 +7,14 @@ import com.stratio.tests.utils.BaseTest;
 
 import cucumber.api.CucumberOptions;
 
-@CucumberOptions(features = { "src/test/resources/features/deletePolicies.feature" })
+@CucumberOptions(features = { "src/test/resources/features/api/deleteFragments.feature" })
 public class Delete extends BaseTest {
 
     public Delete() {
     }
 
     @Test(enabled = true)
-    public void policiesTest() throws Exception {
+    public void fragmentsTest() throws Exception {
         new CucumberRunner(this.getClass()).runCukes();
     }
 }

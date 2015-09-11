@@ -1,4 +1,4 @@
-package com.stratio.tests.fragments;
+package com.stratio.tests.api.policyContexts;
 
 import org.testng.annotations.Test;
 
@@ -7,10 +7,10 @@ import com.stratio.tests.utils.BaseTest;
 
 import cucumber.api.CucumberOptions;
 
-@CucumberOptions(features = { "src/test/resources/features/deleteFragments.feature" })
-public class Delete extends BaseTest {
+@CucumberOptions(features = { "src/test/resources/features/api/putPolicyContexts.feature" })
+public class Put extends BaseTest {
 
-    public Delete() {
+    public Put() {
     }
 
     @Test(enabled = true)

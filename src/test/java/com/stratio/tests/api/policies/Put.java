@@ -1,4 +1,4 @@
-package com.stratio.tests.policies;
+package com.stratio.tests.api.policies;
 
 import org.testng.annotations.Test;
 
@@ -7,10 +7,10 @@ import com.stratio.tests.utils.BaseTest;
 
 import cucumber.api.CucumberOptions;
 
-@CucumberOptions(features = { "src/test/resources/features/postPolicies.feature" })
-public class Post extends BaseTest {
+@CucumberOptions(features = { "src/test/resources/features/api/putPolicies.feature" })
+public class Put extends BaseTest {
 
-    public Post() {
+    public Put() {
     }
 
     @Test(enabled = true)

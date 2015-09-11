@@ -30,7 +30,7 @@ Feature: Test all PUT operations for policyContexts in Sparkta Swagger API
 		| fragments | DELETE | N/A |
 		| id | DELETE | N/A |
 		# Get policy id
-		Given I wait for '10' seconds
+		Given I wait '10' seconds
 		When I send a 'GET' request to 'policy/findByName/policycontextvalid'
 		Then the service response status must be '200'.
 		And I save element '$.id' in attribute 'previousPolicyID'

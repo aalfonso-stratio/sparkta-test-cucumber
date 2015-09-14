@@ -17,3 +17,6 @@ Feature: Test all expected elements are present in Sparkta GUI for inputs
 		Given '1' elements exists with 'css:button[data-ng-click="inputs.createInput()"]'
 		When I click on the element on index '0'
 		Then I wait '2' seconds
+		Then '1' elements exists with 'css:span[translate="_INPUT_WINDOW_NEW_TITLE_"]'
+		Then '1' elements exists with 'css:span[translate="_INPUT_BUTTON_CANCEL_"]'
+		When I click on the element on index '0'

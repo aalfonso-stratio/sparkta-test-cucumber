@@ -9,11 +9,11 @@ import com.stratio.tests.utils.BaseTest;
 
 import cucumber.api.CucumberOptions;
 
-@CucumberOptions(features = { "src/test/resources/features/gui/addNewInputs.feature" })
-public class AddNew extends BaseTest {
+@CucumberOptions(features = { "src/test/resources/features/gui/addNewInputFlume.feature" })
+public class AddNewFlume extends BaseTest {
     
     @Factory(enabled = false, dataProviderClass = BrowsersDataProvider.class, dataProvider = "availableUniqueBrowsers")
-    public AddNew(String browser) {
+    public AddNewFlume(String browser) {
 	this.browser = browser;
     }
 

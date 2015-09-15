@@ -1,19 +1,34 @@
 @web @rest
-Feature: Test adding a new Flume input in Sparkta GUI
+Feature: Test duplicating a input in Sparkta GUI
 		
 	Background: Setup Sparkta GUI
 		Given I set web base url to '${SPARKTA_HOST}':'${SPARKTA_PORT}'
 		Given I send requests to '${SPARKTA_HOST}':'${SPARKTA_API_PORT}'
 		
-	Scenario: Try to add a new input
+	Scenario: Try to duplicate an existing input
+		Given I send a 'POST' request to 'fragment' based on 'schemas/fragments/fragment.conf' as 'json' with:
+		| id | DELETE | N/A |
+		| fragmentType | UPDATE | input |
+		| name | UPDATE | inputfragment1 |
+		| element.type | UPDATE | Flume |
+		Then the service response status must be '200'.
+		And I save element '$.id' in attribute 'previousFragmentID'
+		When I send a 'GET' request to 'fragment/input'
+		Then the service response status must be '200' and its response length must be '1'
+
 		Given I browse to '#/dashboard/inputs'
 		Then I wait '1' second
-		Then '1' element exists with 'css:button[data-qa="inputs-new-button"]'
+		Given '1' element exists with 'css:span[data-qa="input-context-menu-!{previousFragmentID}"]'
+		Then I click on the element on index '0'
+		And I wait '1' second
+		Given '1' element exists with 'css:st-menu-element[data-qa="input-context-menu-!{previousFragmentID}-edit"]'
 		When I click on the element on index '0'
 		Then I wait '1' second
 		And '1' element exists with 'css:aside[data-qa="fragment-details-modal"]'
-	
+		
 		# Try with empty name
+		Given '1' element exists with 'css:input[data-qa="fragment-detail-name"]'
+		When I send 'HOME, SHIFT + END, DELETE' on the element on index '0'
 		Given '1' element exists with 'css:button[data-qa="modal-ok-button"]'
 		When I click on the element on index '0'
 		# Error message should appear
@@ -78,7 +93,7 @@ Feature: Test adding a new Flume input in Sparkta GUI
 		
 		# Fill in name field
 		Given '1' element exists with 'css:input[data-qa="fragment-detail-name"]'
-		Then I type 'validFlumeInput' on the element on index '0'
+		Then I type 'inputfragment1New' on the element on index '0'
 		# Fill in host field
 		Given '1' element exists with 'css:input[data-qa="fragment-details-flume-pull-host-0"]'
 		Then I send 'HOME, SHIFT + END, DELETE' on the element on index '0'
@@ -93,98 +108,19 @@ Feature: Test adding a new Flume input in Sparkta GUI
 		Given '1' element exists with 'css:input[data-qa="fragment-details-flume-pull-parallelism"]'
 		Then I send 'HOME, SHIFT + END, DELETE' on the element on index '0'
 		
-		# Create
+		# Modify
 		Given '1' element exists with 'css:button[data-qa="modal-ok-button"]'
 		When I click on the element on index '0'
+		# I have to wait a while, if not 2 inputs will be reported
+		Then I wait '2' seconds
 		# Check that input fragment has been created
 		# Retrieve input fragment id using api
-		When I send a 'GET' request to 'fragment/input/name/validflumeinput'
+		When I send a 'GET' request to 'fragment/input/name/inputfragment1new'
 		Then the service response status must be '200'.
-		And I save element '$.id' in attribute 'previousFragmentID'
+		And I save element '$.id' in attribute 'previousFragmentID_2'
 		# Check that an input element has been created
-		Then '1' element exists with 'css:span[data-qa="input-context-menu-!{previousFragmentID}"]'
+		Then '1' element exists with 'css:span[data-qa="input-context-menu-!{previousFragmentID_2}"]'
 		
-		# Try push type
-		Given '1' element exists with 'css:button[data-qa="inputs-new-button"]'
-		Then  I click on the element on index '0'
-		Then I wait '1' second
-		And '1' element exists with 'css:aside[data-qa="fragment-details-modal"]'
-		
-		# Change value in drop-down menu to push
-		Given '1' element exists with 'css:select[data-qa="fragment-details-flume-type"]'
-		Then I select 'push' on the element on index '0'
-		Then I wait '1' second
-		
-		# Try with empty Host
-		Given '1' element exists with 'css:input[data-qa="fragment-details-flume-push-host"]'
-		When I send 'HOME, SHIFT + END, DELETE' on the element on index '0'
-		Given '1' element exists with 'css:button[data-qa="modal-ok-button"]'
-		When I click on the element on index '0'
-		Then '1' elements exist with 'css:span[data-qa="fragment-details-flume-push-host-error-required"]'
-		
-		# Try with port using letters
-		Given '1' element exists with 'css:input[data-qa="fragment-details-flume-push-port"]'
-		Then I type 'port' on the element on index '0'
-		Given '1' element exists with 'css:button[data-qa="modal-ok-button"]'
-		When I click on the element on index '0'
-		# Error message should appear
-		Then '1' element exists with 'css:span[data-qa="fragment-details-flume-push-port-error-pattern"]'
-		
-		# Try with empty Port
-		Given '1' element exists with 'css:input[data-qa="fragment-details-flume-push-port"]'
-		When I send 'HOME, SHIFT + END, DELETE' on the element on index '0'
-		Given '1' element exists with 'css:button[data-qa="modal-ok-button"]'
-		When I click on the element on index '0'
-		# Error message should appear
-		Then '1' element exists with 'css:span[data-qa="fragment-details-flume-push-port-error-required"]'
-		
-		# Add same input fragment
-		# Fill in name field
-		Given '1' element exists with 'css:input[data-qa="fragment-detail-name"]'
-		Then I type 'validFlumeInput' on the element on index '0'
-		# Fill in host field
-		Given '1' element exists with 'css:input[data-qa="fragment-details-flume-push-host"]'
-		Then I type 'localhost' on the element on index '0'
-		# Fill in port field
-		Given '1' element exists with 'css:input[data-qa="fragment-details-flume-push-port"]'
-		Then I type '11999' on the element on index '0'
-		# Select Decompression checkbox
-		#Given '1' element exists with 'css:input[data-qa="fragment-details-flume-push-enable-decompression"]' !!
-		Given '1' element exists with 'css:label[for="dataSource_DECOMPRESSION_Form"]'
-		Then I click on the element on index '0'
-		# Create
-		Given '1' element exists with 'css:button[data-qa="modal-ok-button"]'
-		When I click on the element on index '0'
-		Then '1' element exists with 'css:div[data-qa="error-msg"]'
-		And '1' element exists with 'css:span[translate="_INPUT_ERROR_100_"]'
-				
-		# Cancel operation
-		Given '1' element exists with 'css:button[data-qa="modal-cancel-button"]'
-		Then I click on the element on index '0'
-		# Check pop up is closed
-		And I wait '1' second
-		Then '0' element exists with 'css:button[data-qa="modal-cancel-button"]'
-		
-		# Check close button in modal
-		Given '1' element exists with 'css:button[data-qa="inputs-new-button"]'
-		When I click on the element on index '0'
-		Then I wait '1' second
-		And '1' element exists with 'css:aside[data-qa="fragment-details-modal"]'
-		Given '1' element exists with 'css:i[data-qa="modal-cancel-icon"]'
-		When I click on the element on index '0'
-		Then I wait '1' second
-		And '0' element exists with 'css:aside[data-qa="fragment-details-modal"]'		
-		
-		# Delete input fragment created
-		Given '1' element exists with 'css:span[data-qa="input-context-menu-!{previousFragmentID}"]'
-		Then I click on the element on index '0'
-		And I wait '1' second
-		Given '1' element exists with 'css:st-menu-element[data-qa="input-context-menu-!{previousFragmentID}-delete"]'
-		When I click on the element on index '0'
-		Then I wait '1' second
-		And '1' element exists with 'css:aside[data-qa="delete-modal"]'
-		Given '1' element exists with 'css:button[data-qa="modal-ok-button"]'
-		Then I click on the element on index '0'
-		And I wait '1' second
-		And '0' element exists with 'css:span[data-qa="input-context-menu-!{previousFragmentID}"]'
-		
+		# Delete everything
+		When I send a 'DELETE' request to 'fragment/input/!{previousFragmentID_2}'
+		Then the service response status must be '200'.

@@ -113,8 +113,7 @@ Feature: Test adding a new Kafka input in Sparkta GUI
 		And I save element '$.id' in attribute 'previousFragmentID'
 		# Check that an input element has been created
 		Then '1' element exists with 'css:span[data-qa="input-context-menu-!{previousFragmentID}"]'
-		
-		
+				
 		# Add same input fragment
 		Then '1' element exists with 'css:button[data-qa="inputs-new-button"]'
 		When I click on the element on index '0'

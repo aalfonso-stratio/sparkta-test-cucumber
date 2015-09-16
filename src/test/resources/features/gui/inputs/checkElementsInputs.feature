@@ -14,11 +14,22 @@ Feature: Test all expected elements are present in Sparkta GUI for inputs
 		And '1' elements exists with 'css:select[data-ng-model="inputs.filters.element.type"]'
 		And '1' elements exists with 'css:input[data-ng-model="inputs.filters.name"]'
 		
+		# Press add button and cancel operation
 		Given '1' elements exists with 'css:button[data-qa="inputs-new-button"]'
 		When I click on the element on index '0'
 		Then I wait '2' seconds
 		And '1' element exists with 'css:aside[data-qa="fragment-details-modal"]'
 		Given '1' element exists with 'css:button[data-qa="modal-cancel-button"]'
+		Then I click on the element on index '0'
+		And I wait '1' second
+		And '0' elements exist with 'css:aside[data-qa="fragment-details-modal"]'
+		
+		# Press add button and close modal
+		Given '1' elements exists with 'css:button[data-qa="inputs-new-button"]'
+		When I click on the element on index '0'
+		Then I wait '2' seconds
+		And '1' element exists with 'css:aside[data-qa="fragment-details-modal"]'
+		Given '1' element exists with 'css:i[data-qa="modal-cancel-icon"]'
 		Then I click on the element on index '0'
 		And I wait '1' second
 		And '0' elements exist with 'css:aside[data-qa="fragment-details-modal"]'

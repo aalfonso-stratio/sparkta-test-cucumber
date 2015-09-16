@@ -1,4 +1,4 @@
-package com.stratio.tests.gui.policies;
+package com.stratio.tests.gui.outputs;
 
 import org.testng.annotations.Factory;
 import org.testng.annotations.Test;
@@ -9,16 +9,16 @@ import com.stratio.tests.utils.BaseTest;
 
 import cucumber.api.CucumberOptions;
 
-@CucumberOptions(features = { "src/test/resources/features/gui/policies/checkElementsPolicies.feature" })
-public class CheckElements extends BaseTest {
+@CucumberOptions(features = { "src/test/resources/features/gui/outputs/addNewOutputCSV.feature" })
+public class AddNewCSV extends BaseTest {
     
     @Factory(enabled = false, dataProviderClass = BrowsersDataProvider.class, dataProvider = "availableUniqueBrowsers")
-    public CheckElements(String browser) {
+    public AddNewCSV(String browser) {
 	this.browser = browser;
     }
 
     @Test(enabled = true)
-    public void checkElementsTest() throws Exception {
+    public void addNewTest() throws Exception {
         new CucumberRunner(this.getClass()).runCukes();
     }
 }

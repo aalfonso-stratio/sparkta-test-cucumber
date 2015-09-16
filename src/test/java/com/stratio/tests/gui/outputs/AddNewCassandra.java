@@ -9,7 +9,7 @@ import com.stratio.tests.utils.BaseTest;
 
 import cucumber.api.CucumberOptions;
 
-@CucumberOptions(features = { "src/test/resources/features/gui/addNewOutputCassandra.feature" })
+@CucumberOptions(features = { "src/test/resources/features/gui/outputs/addNewOutputCassandra.feature" })
 public class AddNewCassandra extends BaseTest {
     
     @Factory(enabled = false, dataProviderClass = BrowsersDataProvider.class, dataProvider = "availableUniqueBrowsers")

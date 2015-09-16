@@ -59,7 +59,7 @@ Feature: Test duplicating a input in Sparkta GUI
 		Then '1' element exists with 'css:span[data-qa="input-context-menu-!{previousFragmentID_2}"]'
 		And '1' element exists with 'css:span[data-qa="input-context-menu-!{previousFragmentID}"]'
 		
-		# Delete everything
+		Scenario: Delete everything
 		When I send a 'DELETE' request to 'fragment/input/!{previousFragmentID}'
 		Then the service response status must be '200'.
 		When I send a 'DELETE' request to 'fragment/input/!{previousFragmentID_2}'

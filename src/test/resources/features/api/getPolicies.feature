@@ -90,7 +90,7 @@ Feature: Test all GET operations for policies in Sparkta Swagger API
 		
 	Scenario: Get all policies with policies available
 		When I send a 'GET' request to 'policy/all'	
-		Then the service response status must be '200' and its response length must be '3'
+		Then the service response status must be '200' and its response length must be '2'
 
 	Scenario: Run a policy with 2 existing output fragments
 		# Create output fragment 2

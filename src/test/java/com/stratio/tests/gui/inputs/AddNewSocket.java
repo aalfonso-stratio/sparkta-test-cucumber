@@ -9,16 +9,16 @@ import com.stratio.tests.utils.BaseTest;
 
 import cucumber.api.CucumberOptions;
 
-@CucumberOptions(features = { "src/test/resources/features/gui/inputs/editInput.feature" })
-public class Edit extends BaseTest {
+@CucumberOptions(features = { "src/test/resources/features/gui/inputs/addNewInputSocket.feature" })
+public class AddNewSocket extends BaseTest {
     
     @Factory(enabled = false, dataProviderClass = BrowsersDataProvider.class, dataProvider = "availableUniqueBrowsers")
-    public Edit(String browser) {
+    public AddNewSocket(String browser) {
 	this.browser = browser;
     }
 
     @Test(enabled = true)
-    public void checkElementsTest() throws Exception {
+    public void addNewTest() throws Exception {
         new CucumberRunner(this.getClass()).runCukes();
     }
 }

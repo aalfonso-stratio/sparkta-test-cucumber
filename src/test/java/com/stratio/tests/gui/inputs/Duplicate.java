@@ -9,7 +9,7 @@ import com.stratio.tests.utils.BaseTest;
 
 import cucumber.api.CucumberOptions;
 
-@CucumberOptions(features = { "src/test/resources/features/gui/duplicateInput.feature" })
+@CucumberOptions(features = { "src/test/resources/features/gui/inputs/duplicateInput.feature" })
 public class Duplicate extends BaseTest {
     
     @Factory(enabled = false, dataProviderClass = BrowsersDataProvider.class, dataProvider = "availableUniqueBrowsers")

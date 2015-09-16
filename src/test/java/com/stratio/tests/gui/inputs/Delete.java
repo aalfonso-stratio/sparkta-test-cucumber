@@ -9,11 +9,11 @@ import com.stratio.tests.utils.BaseTest;
 
 import cucumber.api.CucumberOptions;
 
-@CucumberOptions(features = { "src/test/resources/features/gui/inputs/editInput.feature" })
-public class Edit extends BaseTest {
+@CucumberOptions(features = { "src/test/resources/features/gui/inputs/deleteInput.feature" })
+public class Delete extends BaseTest {
     
     @Factory(enabled = false, dataProviderClass = BrowsersDataProvider.class, dataProvider = "availableUniqueBrowsers")
-    public Edit(String browser) {
+    public Delete(String browser) {
 	this.browser = browser;
     }
 

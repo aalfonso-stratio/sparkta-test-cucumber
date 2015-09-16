@@ -14,7 +14,7 @@ Feature: Test adding a new Kafka input in Sparkta GUI
 		And '1' element exists with 'css:aside[data-qa="fragment-details-modal"]'
 		
 		# Select kafka
-		Given '1' element exists with 'css:i[tooltip="kafka"]'
+		Given '1' element exists with 'css:label[data-qa="fragment-detail-type-kafka"]'
 		When I click on the element on index '0'
 		Then I wait '1' second
 		
@@ -22,70 +22,85 @@ Feature: Test adding a new Kafka input in Sparkta GUI
 		Given '1' element exists with 'css:button[data-qa="modal-ok-button"]'
 		When I click on the element on index '0'
 		# Error message should appear (Name, Group ID and Topic)
-		Then '1' element exists with 'css:div[data-qa="fragment-detail-name-error"]'
+		Then '1' element exists with 'css:span[data-qa="fragment-detail-name-error-required"]'
+		And '1' elements exist with 'css:span[data-qa="fragment-details-kafka-group-id-error-required"]'
+		And '1' elements exist with 'css:span[data-qa="fragment-details-kafka-topic-0-error-required"]'
+		
+		# Try name with spaces
+		Given '1' element exists with 'css:input[data-qa="fragment-detail-name"]'
+		Then I type 'valid Kafka Input' on the element on index '0'
+		Given '1' element exists with 'css:button[data-qa="modal-ok-button"]'
+		When I click on the element on index '0'
+		# Error message should appear
+		Then '1' element exists with 'css:span[data-qa="fragment-detail-name-error-pattern"]'
+		Given '1' element exists with 'css:input[data-qa="fragment-detail-name"]'
+		Then I send 'HOME, SHIFT + END, DELETE' on the element on index '0'	
 		
 		# Try to add new Host-Port pair
-		Given '2' element exists with 'css:i[ng-click="addItem()"]'
+		Given '1' element exists with 'css:i[data-qa="fragment-details-kafka-zookeeper-connect-plus-0"]'
 		When I click on the element on index '0'
-		Then '1' element exists with 'id:dataSourceForm1-host'
-		And '1' element exists with 'id:dataSourceForm1-port'
-		And '2' elements exist with 'css:i[ng-click="removeItem($index)"]'
+		Then '1' element exists with 'css:input[data-qa="fragment-details-kafka-host-1"]'
+		And '1' element exists with 'css:input[data-qa="fragment-details-kafka-port-1"]'
+		And '2' elements exist with 'css:i[data-qa^="fragment-details-kafka-zookeeper-connect-plus"]'
+		And '2' elements exist with 'css:i[data-qa^="fragment-details-kafka-zookeeper-connect-minus"]'
 		Then I wait '2' seconds
 		When I click on the element on index '1'
-		Then '0' elements exist with 'id:dataSourceForm1-host'
-		And '0' elements exist with 'id:dataSourceForm1-port'
+		Then '0' elements exist with 'css:input[data-qa="fragment-details-kafka-host-1"]'
+		And '0' elements exist with 'css:input[data-qa="fragment-details-kafka-port-1"]'
 		
 		# Try to add new Topic-Partitions pair
-		Given '2' element exists with 'css:i[ng-click="addItem()"]'
-		When I click on the element on index '1'
-		Then '1' element exists with 'id:dataSourceForm1-topic'
-		And '1' element exists with 'id:dataSourceForm1-partition'
-		And '2' elements exist with 'css:i[ng-click="removeItem($index)"]'
+		Given '1' element exists with 'css:i[data-qa="fragment-details-kafka-topics-plus-0"]'
+		When I click on the element on index '0'
+		Then '1' element exists with 'css:input[data-qa="fragment-details-kafka-topic-1"]'
+		And '1' element exists with 'css:input[data-qa="fragment-details-kafka-partition-1"]'
+		And '2' elements exist with 'css:i[data-qa^="fragment-details-kafka-topics-plus"]'
+		And '2' elements exist with 'css:i[data-qa^="fragment-details-kafka-topics-minus"]'
 		Then I wait '2' seconds
 		When I click on the element on index '1'
-		Then '0' element exists with 'id:dataSourceForm1-topic'
-		And '0' element exists with 'id:dataSourceForm1-partition'		
+		Then '0' element exists with 'css:input[data-qa="fragment-details-kafka-topic-1"]'
+		And '0' element exists with 'css:input[data-qa="fragment-details-kafka-partition-1"]'		
 		
 		# Try with port using letters
-		Given '1' element exists with 'id:dataSourceForm0-port'
+		Given '1' element exists with 'css:input[data-qa="fragment-details-kafka-port-0"]'
 		Then I type 'port' on the element on index '0'
 		Given '1' element exists with 'css:button[data-qa="modal-ok-button"]'
 		When I click on the element on index '0'
 		# Error message should appear
-		Then '1' element exists with 'css:span[data-ng-if="this[name][name].$error.pattern"]'
-		And '3' elements exist with 'css:span[data-ng-if="this[name][name].$error.required"]'
+		Then '1' element exists with 'css:span[data-qa="fragment-details-kafka-port-0-error-pattern"]'
 		
 		# Try with empty Host
-		Given '1' element exists with 'id:dataSourceForm0-host'
+		Given '1' element exists with 'css:input[data-qa="fragment-details-kafka-host-0"]'
 		When I send 'HOME, SHIFT + END, DELETE' on the element on index '0'
 		# Try with empty Port
-		Given '1' element exists with 'id:dataSourceForm0-port'
+		Given '1' element exists with 'css:input[data-qa="fragment-details-kafka-port-0"]'
 		When I send 'HOME, SHIFT + END, DELETE' on the element on index '0'
 		# Try with empty partitions
-		Given '1' element exists with 'id:dataSourceForm0-partition'
+		Given '1' element exists with 'css:input[data-qa="fragment-details-kafka-partition-0"]'
 		When I send 'HOME, SHIFT + END, DELETE' on the element on index '0'
 		Given '1' element exists with 'css:button[data-qa="modal-ok-button"]'
 		When I click on the element on index '0'
 		# Error message should appear
-		Then '6' elements exist with 'css:span[data-ng-if="this[name][name].$error.required"]'
+		Then '1' elements exist with 'css:span[data-qa="fragment-details-kafka-host-0-error-required"]'
+		And '1' elements exist with 'css:span[data-qa="fragment-details-kafka-host-0-error-required"]'
+		And '1' elements exist with 'css:span[data-qa="fragment-details-kafka-partition-0-error-required"]'
 		
 		# Fill in name field
-		Given '1' element exists with 'id:dataSourceNameForm'
+		Given '1' element exists with 'css:input[data-qa="fragment-detail-name"]'
 		Then I type 'validKafkaInput' on the element on index '0'
 		# Fill in host field
-		Given '1' element exists with 'id:dataSourceForm0-host'
+		Given '1' element exists with 'css:input[data-qa="fragment-details-kafka-host-0"]'
 		Then I type 'localhost' on the element on index '0'
 		# Fill in port field
-		Given '1' element exists with 'id:dataSourceForm0-port'
+		Given '1' element exists with 'css:input[data-qa="fragment-details-kafka-port-0"]'
 		Then I type '2181' on the element on index '0'
 		# Fill in Group ID
-		Given '1' element exists with 'id:dataSource_GROUP_ID_Form'
+		Given '1' element exists with 'css:input[data-qa="fragment-details-kafka-group-id"]'
 		Then I type 'myGroupID' on the element on index '0'
 		# Fill in Topic
-		Given '1' element exists with 'id:dataSourceForm0-topic'
+		Given '1' element exists with 'css:input[data-qa="fragment-details-kafka-topic-0"]'
 		Then I type 'myTopic' on the element on index '0'
 		# Fill in Partitions
-		Given '1' element exists with 'id:dataSourceForm0-partition'
+		Given '1' element exists with 'css:input[data-qa="fragment-details-kafka-partition-0"]'
 		Then I type '1' on the element on index '0'
 		
 		# Create
@@ -106,7 +121,7 @@ Feature: Test adding a new Kafka input in Sparkta GUI
 		Then I wait '1' second
 		And '1' element exists with 'css:aside[data-qa="fragment-details-modal"]'
 		# Select kafka
-		Given '1' element exists with 'css:i[tooltip="kafka"]'
+		Given '1' element exists with 'css:label[data-qa="fragment-detail-type-kafka"]'
 		When I click on the element on index '0'
 		Then I wait '1' second
 		# Fill in name field

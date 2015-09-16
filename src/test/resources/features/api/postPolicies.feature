@@ -201,25 +201,14 @@ Feature: Test all POST operations for policies in Sparkta Swagger API
 		When I send a 'DELETE' request to 'policy/!{previousPolicyID}'
 		Then the service response status must be '200'.
 		
-	# Policy incorrectly created with default name
-	# This test will fail
 	Scenario: Add a policy with missing name
 		When I send a 'POST' request to 'policy' based on 'schemas/policies/policy.conf' as 'json' with:
 		| fragments | DELETE | N/A |
 		| id | DELETE | N/A |
 		| name | DELETE | N/A |
-		Then the service response status must be '500'.
-		And I save element '$.id' in attribute 'previousPolicyID'
-		# Delete incorrectly created policy
-		When I send a 'DELETE' request to 'policy/!{previousPolicyID}'
-		Then the service response status must be '200'.
+		Then the service response status must be '400' and its response must contain the text 'No usable value for name'
 	
 	Scenario: Clean up
-		When I send a 'GET' request to 'policy/findByName/default'
-		Then the service response status must be '200'.
-		And I save element '$.id' in attribute 'previousPolicyID'
-		When I send a 'DELETE' request to 'policy/!{previousPolicyID}'
-		Then the service response status must be '200'.
 		When I send a 'GET' request to 'policy/findByName/policyMissingDimensions'
 		Then the service response status must be '200'.
 		And I save element '$.id' in attribute 'previousPolicyID'

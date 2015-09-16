@@ -1,11 +1,11 @@
 @web @rest
-Feature: Test duplicating a input in Sparkta GUI
+Feature: Test editing a input in Sparkta GUI
 		
 	Background: Setup Sparkta GUI
 		Given I set web base url to '${SPARKTA_HOST}':'${SPARKTA_PORT}'
 		Given I send requests to '${SPARKTA_HOST}':'${SPARKTA_API_PORT}'
 		
-	Scenario: Try to duplicate an existing input
+	Scenario: Try to edit an existing input
 		Given I send a 'POST' request to 'fragment' based on 'schemas/fragments/fragment.conf' as 'json' with:
 		| id | DELETE | N/A |
 		| fragmentType | UPDATE | input |
@@ -121,6 +121,6 @@ Feature: Test duplicating a input in Sparkta GUI
 		# Check that an input element has been created
 		Then '1' element exists with 'css:span[data-qa="input-context-menu-!{previousFragmentID_2}"]'
 		
-		# Delete everything
+		Scenario: Delete everything
 		When I send a 'DELETE' request to 'fragment/input/!{previousFragmentID_2}'
 		Then the service response status must be '200'.

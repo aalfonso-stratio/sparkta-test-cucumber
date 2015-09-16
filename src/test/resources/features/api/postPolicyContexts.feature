@@ -15,7 +15,7 @@ Feature: Test all POST operations for policyContexts in Sparkta Swagger API
 		| name | DELETE | N/A |
 		| fragments | DELETE | N/A |
 		| id | DELETE | N/A |
-		Then the service response status must be '500' and its response must contain the text 'No usable value for name'
+		Then the service response status must be '400' and its response must contain the text 'No usable value for name'
 	
 	Scenario: Add a policyContext with no input
 		Given I send a 'POST' request to 'policyContext' based on 'schemas/policies/policy.conf' as 'json' with:

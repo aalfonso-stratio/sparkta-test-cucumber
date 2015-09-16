@@ -18,6 +18,16 @@ Feature: Test adding a new Flume input in Sparkta GUI
 		When I click on the element on index '0'
 		# Error message should appear
 		Then '1' element exists with 'css:span[data-qa="fragment-detail-name-error-required"]'
+		
+		# Try name with spaces
+		Given '1' element exists with 'css:input[data-qa="fragment-detail-name"]'
+		Then I type 'valid Flume Input' on the element on index '0'
+		Given '1' element exists with 'css:button[data-qa="modal-ok-button"]'
+		When I click on the element on index '0'
+		# Error message should appear
+		Then '1' element exists with 'css:span[data-qa="fragment-detail-name-error-pattern"]'
+		Given '1' element exists with 'css:input[data-qa="fragment-detail-name"]'
+		Then I send 'HOME, SHIFT + END, DELETE' on the element on index '0'		
 			
 		# Make sure we are in pull in drop-down
 		Given '1' element exists with 'css:select[data-qa="fragment-details-flume-type"]'
@@ -58,10 +68,10 @@ Feature: Test adding a new Flume input in Sparkta GUI
 		When I click on the element on index '0'
 		Then '1' element exists with 'css:input[data-qa="fragment-details-flume-pull-host-1"]'
 		And '1' element exists with 'css:input[data-qa="fragment-details-flume-pull-port-1"]'
-		And '1' elements exist with 'css:i[data-qa="fragment-details-flume-pull-addresses-minus-0"]'
-		And '1' elements exist with 'css:i[data-qa="fragment-details-flume-pull-addresses-minus-1"]'
+		And '2' elements exist with 'css:i[data-qa^="fragment-details-flume-pull-addresses-plus"]'
+		And '2' elements exist with 'css:i[data-qa^="fragment-details-flume-pull-addresses-minus"]'
 		And I wait '1' second
-		When I click on the element on index '0'
+		When I click on the element on index '1'
 		Then '0' elements exist with 'css:input[data-qa="fragment-details-flume-pull-host-1"]'
 		And '0' elements exist with 'css:input[data-qa="fragment-details-flume-pull-port-1"]'
 		

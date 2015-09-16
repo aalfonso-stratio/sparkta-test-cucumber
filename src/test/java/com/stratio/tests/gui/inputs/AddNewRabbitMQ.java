@@ -9,7 +9,7 @@ import com.stratio.tests.utils.BaseTest;
 
 import cucumber.api.CucumberOptions;
 
-@CucumberOptions(features = { "src/test/resources/features/gui/addNewInputRabbitMQ.feature" })
+@CucumberOptions(features = { "src/test/resources/features/gui/inputs/addNewInputRabbitMQ.feature" })
 public class AddNewRabbitMQ extends BaseTest {
     
     @Factory(enabled = false, dataProviderClass = BrowsersDataProvider.class, dataProvider = "availableUniqueBrowsers")

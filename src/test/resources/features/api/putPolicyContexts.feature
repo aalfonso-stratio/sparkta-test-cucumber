@@ -8,17 +8,17 @@ Feature: Test all PUT operations for policyContexts in Sparkta Swagger API
 		Given I send a 'PUT' request to 'policyContext' as 'json'
 		Then the service response status must be '400' and its response must contain the text 'Request entity expected but not supplied'
 	
-	Scenario: Update a policyContext with non-existing id
+	Scenario: Update a policyContext with non-existing status
 		When I send a 'PUT' request to 'policyContext' based on 'schemas/policyContexts/status.conf' as 'json' with:
 		| id | UPDATE | nonexistingid |
 		| status | UPDATE | INVALID |
 		Then the service response status must be '400' and its response must contain the text 'No usable value for status'
 	
-	Scenario: Update a policyContext with non-existing status
+	Scenario: Update a policyContext with non-existing id
 		When I send a 'PUT' request to 'policyContext' based on 'schemas/policyContexts/status.conf' as 'json' with:
 		| id | UPDATE | nonexistingid |
 		| status | UPDATE | Stopped |
-		Then the service response status must be '201'.
+		Then the service response status must be '404' and its response must contain the text 'No policy with id nonexistingid'.
 	
 	# This test will fail.
 	# Not possible to change status.
@@ -41,7 +41,7 @@ Feature: Test all PUT operations for policyContexts in Sparkta Swagger API
 		Then the service response status must be '201'.
 		# Check the status
 		When I send a 'GET' request to 'policyContext'
-		Then the service response status must be '200' and its response must contain the text '"status": "Stopped"'
+		Then the service response status must be '200' and its response must contain the text '"status":"Stopped"'
 
 	# This test will fail. Policy is listed, but not possible to delete.
 	# Issue 831

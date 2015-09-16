@@ -9,7 +9,7 @@ import com.stratio.tests.utils.BaseTest;
 
 import cucumber.api.CucumberOptions;
 
-@CucumberOptions(features = { "src/test/resources/features/gui/addNewInputKafkaDirect.feature" })
+@CucumberOptions(features = { "src/test/resources/features/gui/inputs/addNewInputKafkaDirect.feature" })
 public class AddNewKafkaDirect extends BaseTest {
     
     @Factory(enabled = false, dataProviderClass = BrowsersDataProvider.class, dataProvider = "availableUniqueBrowsers")

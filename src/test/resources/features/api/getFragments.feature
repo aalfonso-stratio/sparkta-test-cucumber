@@ -38,11 +38,11 @@ Feature: Test all GET operations for fragments in Sparkta Swagger API
 	
 	Scenario: Get all available fragments of type input with name name
 		When I send a 'GET' request to 'fragment/input/name/name'
-		Then the service response status must be '500'.
+		Then the service response status must be '404' and its response must contain the text 'No fragment of type input with name name'
 		
 	Scenario: Get all available fragments of type output with name name
 		When I send a 'GET' request to 'fragment/output/name/name'
-		Then the service response status must be '500'.
+		Then the service response status must be '404' and its response must contain the text 'No fragment of type output with name name'
 		
 	Scenario: Get all available fragments of type input
 		Given I send a 'POST' request to 'fragment' based on 'schemas/fragments/fragment.conf' as 'json' with:

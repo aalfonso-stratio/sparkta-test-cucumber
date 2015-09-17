@@ -10,7 +10,7 @@ Feature: Test all GET operations for policies in Sparkta Swagger API
 	
 	Scenario: Get a policy by name when none available
 		When I send a 'GET' request to 'policy/findByName/nonExistingPolicy'
-		Then the service response status must be '404'.
+		Then the service response status must be '404' and its response must contain the text 'No policy with name nonexistingpolicy'
 	
 	Scenario: Get a policy by id when none available
 		When I send a 'GET' request to 'policy/find/nonExistingId'
@@ -33,7 +33,7 @@ Feature: Test all GET operations for policies in Sparkta Swagger API
 		Then the service response status must be '200'.
 		And I save element '$.id' in attribute 'previousPolicyID'
 		When I send a 'GET' request to 'policy/findByName/nonExistingPolicy'
-		Then the service response status must be '500'.
+		Then the service response status must be '404' and its response must contain the text 'No policy with name nonexistingpolicy'
 	
 	Scenario: Get a non-existing policy by id
 		When I send a 'GET' request to 'policy/find/nonExistingId'

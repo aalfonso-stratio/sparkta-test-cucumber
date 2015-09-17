@@ -81,6 +81,14 @@ Feature: Test adding a new Cassandra output in Sparkta GUI
 		And '1' elements exist with 'css:span[data-qa="fragment-details-cassandra-keyspace-error-required"]'
 		And '1' elements exist with 'css:span[data-qa="fragment-details-cassandra-replication-factor-error-required"]'
 		
+		# Try with invalid port number
+		Given '1' element exists with 'css:input[data-qa="fragment-details-cassandra-connectionPort"]'
+		Then I type '66666' on the element on index '0'
+		Given '1' element exists with 'css:button[data-qa="modal-ok-button"]'
+		When I click on the element on index '0'
+		# Error message should appear
+		Then '1' elements exist with 'css:span[data-qa="fragment-details-cassandra-connectionPort-error-pattern"]'
+				
 		# Try all drop-down options
 		# Keyspace class
 		Given '1' element exists with 'css:select[data-qa="fragment-details-cassandra-keyspaceClass"]'
@@ -112,7 +120,8 @@ Feature: Test adding a new Cassandra output in Sparkta GUI
 		Then I type 'localhost' on the element on index '0'
 		# Fill in port field
 		Given '1' element exists with 'css:input[data-qa="fragment-details-cassandra-connectionPort"]'
-		Then I type '9042' on the element on index '0'
+		Then I send 'HOME, SHIFT + END, DELETE' on the element on index '0'
+		And I type '9042' on the element on index '0'
 		# Fill in Keyspace field
 		Given '1' element exists with 'css:input[data-qa="fragment-details-cassandra-keyspace"]'
 		Then I send 'HOME, SHIFT + END, DELETE' on the element on index '0'
@@ -131,7 +140,7 @@ Feature: Test adding a new Cassandra output in Sparkta GUI
 		When I send a 'GET' request to 'fragment/output/name/validcassandraoutput'
 		Then the service response status must be '200'.
 		And I save element '$.id' in attribute 'previousFragmentID'
-		# Check that an input element has been created
+		# Check that an output element has been created
 		Then '1' element exists with 'css:span[data-qa="output-context-menu-!{previousFragmentID}"]'
 		
 		# Add same output fragment

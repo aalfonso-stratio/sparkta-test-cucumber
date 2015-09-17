@@ -64,6 +64,14 @@ Feature: Test adding a new Kafka Direct input in Sparkta GUI
 		Then '1' elements exist with 'css:span[data-qa="fragment-details-rabbitMQ-host-error-required"]'
 		And '1' elements exist with 'css:span[data-qa="fragment-details-rabbitMQ-port-error-required"]'
 		
+		# Try with invalid port number
+		Given '1' element exists with 'css:input[data-qa="fragment-details-rabbitMQ-port"]'
+		Then I type '66666' on the element on index '0'
+		Given '1' element exists with 'css:button[data-qa="modal-ok-button"]'
+		When I click on the element on index '0'
+		# Error message should appear
+		Then '1' elements exist with 'css:span[data-qa="fragment-details-rabbitMQ-port-error-pattern"]'
+				
 		# Fill in name field
 		Given '1' element exists with 'css:input[data-qa="fragment-detail-name"]'
 		Then I type 'validRabbitMQInput' on the element on index '0'
@@ -72,7 +80,8 @@ Feature: Test adding a new Kafka Direct input in Sparkta GUI
 		Then I type 'localhost' on the element on index '0'
 		# Fill in port field
 		Given '1' element exists with 'css:input[data-qa="fragment-details-rabbitMQ-port"]'
-		Then I type '5672' on the element on index '0'
+		Then I send 'HOME, SHIFT + END, DELETE' on the element on index '0'
+		And I type '5672' on the element on index '0'
 		
 		# Create
 		Given '1' element exists with 'css:button[data-qa="modal-ok-button"]'

@@ -62,6 +62,14 @@ Feature: Test adding a new Flume input in Sparkta GUI
 		Given '1' element exists with 'css:button[data-qa="modal-ok-button"]'
 		When I click on the element on index '0'
 		Then '1' elements exist with 'css:span[data-qa="fragment-details-flume-pull-port-0-error-required"]'
+		
+		# Try with invalid port number
+		Given '1' element exists with 'css:input[data-qa="fragment-details-flume-pull-port-0"]'
+		Then I type '66666' on the element on index '0'
+		Given '1' element exists with 'css:button[data-qa="modal-ok-button"]'
+		When I click on the element on index '0'
+		# Error message should appear
+		Then '1' elements exist with 'css:span[data-qa="fragment-details-flume-pull-port-0-error-pattern"]'
 				
 		# Try to add new Host-Port pair
 		Given '1' element exists with 'css:i[data-qa="fragment-details-flume-pull-addresses-plus-0"]'
@@ -95,7 +103,8 @@ Feature: Test adding a new Flume input in Sparkta GUI
 		And I type 'localhost' on the element on index '0'
 		# Fill in port field
 		Given '1' element exists with 'css:input[data-qa="fragment-details-flume-pull-port-0"]'
-		Then I type '11999' on the element on index '0'
+		Then I send 'HOME, SHIFT + END, DELETE' on the element on index '0'
+		And I type '11999' on the element on index '0'
 		# Empty Max batch size
 		Given '1' element exists with 'css:input[data-qa="fragment-details-flume-pull-max-batch-size"]'
 		Then I send 'HOME, SHIFT + END, DELETE' on the element on index '0'

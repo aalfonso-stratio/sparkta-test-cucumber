@@ -160,7 +160,7 @@ Feature: Test all POST operations for policies in Sparkta Swagger API
 		Then the service response status must be '400' and its response must contain the text 'No usable value for name'
 	
 	# It makes no sense to have such a policy
-	# This test will fail
+	# This test will fail Issue: 924
 	Scenario: Add a policy with missing dimensions inside cubes
 		When I send a 'POST' request to 'policy' based on 'schemas/policies/policy.conf' as 'json' with:
 		| fragments | DELETE | N/A |
@@ -174,7 +174,7 @@ Feature: Test all POST operations for policies in Sparkta Swagger API
 		Then the service response status must be '200'.
 	
 	# It makes no sense to have such a policy
-	# This test will fail
+	# This test will fail Issue: 924
 	Scenario: Add a policy with missing operators inside cubes
 		When I send a 'POST' request to 'policy' based on 'schemas/policies/policy.conf' as 'json' with:
 		| fragments | DELETE | N/A |
@@ -188,7 +188,7 @@ Feature: Test all POST operations for policies in Sparkta Swagger API
 		Then the service response status must be '200'.	
 	
 	# It should not be possible to add a policy with no cubes defined
-	# This test will fail, as at the moment there is no validation
+	# This test will fail, as at the moment there is no validation Issue: 924
 	Scenario: Add a policy with missing cubes
 		When I send a 'POST' request to 'policy' based on 'schemas/policies/policy.conf' as 'json' with:
 		| fragments | DELETE | N/A |

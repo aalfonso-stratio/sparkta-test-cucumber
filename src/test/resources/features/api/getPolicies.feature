@@ -24,6 +24,7 @@ Feature: Test all GET operations for policies in Sparkta Swagger API
 		When I send a 'GET' request to 'policy/run/nonExistingId'
 		Then the service response status must be '404'.
 
+	# Issue: 923
 	Scenario: Get a non-existing policy by name when policies are available
 		When I send a 'POST' request to 'policy' based on 'schemas/policies/policy.conf' as 'json' with:
 		| name | UPDATE | basicpolicy |
@@ -55,9 +56,13 @@ Feature: Test all GET operations for policies in Sparkta Swagger API
 	Scenario: Run a existing policy
 		When I send a 'GET' request to 'policy/run/!{previousPolicyID}'
 		Then the service response status must be '200' and its response must contain the text '{"message":"Creating new context'
-		#When I try to get all available policyContexts	
-		#Then the service response status must be '200' and its response length must be '1'
-	
+		When I send a 'GET' request to 'policyContext'	
+		Then the service response status must be '200' and its response length must be '1'
+		
+#	Scenario: Run the same existing policy
+#		When I send a 'GET' request to 'policy/run/!{previousPolicyID}'
+#		Then the service response status must be '404' and its response must contain the text '{"message":"Creating new context'
+#		
 	Scenario: Get all policies with fragment with incorrect fragment type
 		When I send a 'GET' request to 'policy/fragment/invalid/nonExistingId'
 		Then the service response status must be '200' and its response must contain the text '[]'

@@ -93,7 +93,20 @@ Feature: Test all POST operations for policyContexts in Sparkta Swagger API
 		| fragments | DELETE | N/A |
 		| id | DELETE | N/A |
 		Then the service response status must be '200'.
-		
+		# One policyContext created
+		When I send a 'GET' request to 'policyContext'
+		Then the service response status must be '200' and its response length must be '1'
+		# One policy created
+		When I send a 'GET' request to 'policy/all'	
+		Then the service response status must be '200' and its response length must be '1'
+	
+	Scenario: Add same policyContext
+		When I send a 'POST' request to 'policyContext' based on 'schemas/policies/policy.conf' as 'json' with:
+		| name | UPDATE | policyContextValid |
+		| fragments | DELETE | N/A |
+		| id | DELETE | N/A |
+		Then the service response status must be '404' and its response must contain the text 'policy already exists'
+	
 	Scenario: Add a policyContext with existing fragment
 		When I send a 'POST' request to 'policyContext' based on 'schemas/policies/policy.conf' as 'json' with:
 		| name | UPDATE | policyContext1InputFragment |
@@ -104,11 +117,20 @@ Feature: Test all POST operations for policyContexts in Sparkta Swagger API
 		| id | DELETE | N/A |
 		| input | DELETE | N/A |
 		Then the service response status must be '200' and its response must contain the text 'Creating new context with name'
+		# One policyContext created
+		When I send a 'GET' request to 'policyContext'
+		Then the service response status must be '200' and its response length must be '2'
+		# One policy created
+		When I send a 'GET' request to 'policy/all'	
+		Then the service response status must be '200' and its response length must be '2'
 		# Delete fragments
 		When I send a 'DELETE' request to 'fragment/input/!{previousFragmentID}'
 		Then the service response status must be '200'.
 		When I send a 'DELETE' request to 'fragment/input/!{previousFragmentID_2}'
 		Then the service response status must be '200'.
+		# One policy deleted
+		When I send a 'GET' request to 'policy/all'	
+		Then the service response status must be '200' and its response length must be '1'
 	
 	Scenario: Add a policy context with 2 existing output fragments
 		# Create first output fragment
@@ -137,8 +159,20 @@ Feature: Test all POST operations for policyContexts in Sparkta Swagger API
 		| outputs | DELETE | N/A |
 		| name | UPDATE | policyContextTwoOutputFragment |	
 		Then the service response status must be '200' and its response must contain the text 'Creating new context with name'
+		# One policyContext created
+		When I send a 'GET' request to 'policyContext'
+		Then the service response status must be '200' and its response length must be '2'
+		# One policy created
+		When I send a 'GET' request to 'policy/all'	
+		Then the service response status must be '200' and its response length must be '2'		
 		# Delete fragments
 		When I send a 'DELETE' request to 'fragment/output/!{previousFragmentID}'
 		Then the service response status must be '200'.
 		When I send a 'DELETE' request to 'fragment/output/!{previousFragmentID_2}'
+		Then the service response status must be '200'.
+		# One policy deleted
+		When I send a 'GET' request to 'policy/all'	
+		Then the service response status must be '200' and its response length must be '1'
+		# Delete policy created with first policyContext
+		When I send a 'DELETE' request to 'policy/!{previousPolicyID}'
 		Then the service response status must be '200'.

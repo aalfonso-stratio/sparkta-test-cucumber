@@ -105,7 +105,7 @@ Feature: Test all POST operations for policyContexts in Sparkta Swagger API
 		| name | UPDATE | policyContextValid |
 		| fragments | DELETE | N/A |
 		| id | DELETE | N/A |
-		Then the service response status must be '404' and its response must contain the text 'policy already exists'
+		Then the service response status must be '500' and its response must contain the text 'policyContextValid already exists'
 	
 	Scenario: Add a policyContext with existing fragment
 		When I send a 'POST' request to 'policyContext' based on 'schemas/policies/policy.conf' as 'json' with:

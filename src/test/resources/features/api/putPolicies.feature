@@ -109,6 +109,9 @@ Feature: Test all PUT operations for policies in Sparkta Swagger API
 		| cubes[0].dimensions | DELETE | N/A |
 		Then the service response status must be '400' and its response must contain the text 'No usable value for dimensions'
 	
+	# There is no validation
+	# This test will fail
+	# Issue: 834
 	Scenario: Update a policy with missing operators inside cubes
 		When I send a 'PUT' request to 'policy' based on 'schemas/policies/policy.conf' as 'json' with:
 		| name | UPDATE | validpolicy |

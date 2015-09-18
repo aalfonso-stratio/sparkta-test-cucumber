@@ -13,6 +13,6 @@ Feature: Test all Get operations for policyContexts in Sparkta Swagger API
 		| name | UPDATE | policy1 |
 		| fragments | DELETE | N/A |
 		| id | DELETE | N/A |
-		Then the service response status must be '200' and its response must contain the text 'Creating new context with name policy1'
+		Then the service response status must be '200' and its response must contain the text '"policyName":"policy1"'
 		When I send a 'GET' request to 'policyContext'
 		Then the service response status must be '200' and its response length must be '1'

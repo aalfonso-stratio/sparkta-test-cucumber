@@ -93,6 +93,7 @@ Feature: Test all POST operations for policyContexts in Sparkta Swagger API
 		| fragments | DELETE | N/A |
 		| id | DELETE | N/A |
 		Then the service response status must be '200'.
+		And I save element '$.policyId' in attribute 'previousPolicyID'
 		# One policyContext created
 		When I send a 'GET' request to 'policyContext'
 		Then the service response status must be '200' and its response length must be '1'
@@ -116,7 +117,7 @@ Feature: Test all POST operations for policyContexts in Sparkta Swagger API
 		| fragments[1] | DELETE | N/A |
 		| id | DELETE | N/A |
 		| input | DELETE | N/A |
-		Then the service response status must be '200' and its response must contain the text 'Creating new context with name'
+		Then the service response status must be '200' and its response must contain the text '"policyName":"policyContext1InputFragment"'
 		# One policyContext created
 		When I send a 'GET' request to 'policyContext'
 		Then the service response status must be '200' and its response length must be '2'
@@ -158,10 +159,10 @@ Feature: Test all POST operations for policyContexts in Sparkta Swagger API
 		| id | DELETE | N/A |
 		| outputs | DELETE | N/A |
 		| name | UPDATE | policyContextTwoOutputFragment |	
-		Then the service response status must be '200' and its response must contain the text 'Creating new context with name'
+		Then the service response status must be '200' and its response must contain the text '"policyName":"policyContextTwoOutputFragment"'
 		# One policyContext created
 		When I send a 'GET' request to 'policyContext'
-		Then the service response status must be '200' and its response length must be '2'
+		Then the service response status must be '200' and its response length must be '3'
 		# One policy created
 		When I send a 'GET' request to 'policy/all'	
 		Then the service response status must be '200' and its response length must be '2'		

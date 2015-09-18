@@ -24,7 +24,6 @@ Feature: Test all GET operations for policies in Sparkta Swagger API
 		When I send a 'GET' request to 'policy/run/nonExistingId'
 		Then the service response status must be '404'.
 
-	# Issue: 923
 	Scenario: Get a non-existing policy by name when policies are available
 		When I send a 'POST' request to 'policy' based on 'schemas/policies/policy.conf' as 'json' with:
 		| name | UPDATE | basicpolicy |

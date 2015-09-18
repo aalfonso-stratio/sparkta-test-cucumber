@@ -167,11 +167,11 @@ Feature: Test all POST operations for policies in Sparkta Swagger API
 		| id | DELETE | N/A |
 		| name | UPDATE | policyMissingDimensions |
 		| cubes[0].dimensions | DELETE | N/A |
-		Then the service response status must be '400' and its response must contain the text 'No usable value for dimensions'
-		And I save element '$.id' in attribute 'previousPolicyID'
-		# Delete incorrectly created policy
-		When I send a 'DELETE' request to 'policy/!{previousPolicyID}'
-		Then the service response status must be '200'.
+		Then the service response status must be '400' and its response must contain the text 'No usable value for Cubes-dimensions. Array is too short: must have at least 1 elements but instance has 0 elements.'
+#		And I save element '$.id' in attribute 'previousPolicyID'
+#		# Delete incorrectly created policy
+#		When I send a 'DELETE' request to 'policy/!{previousPolicyID}'
+#		Then the service response status must be '200'.
 	
 	# It makes no sense to have such a policy
 	# This test will fail Issue: 924
@@ -183,7 +183,7 @@ Feature: Test all POST operations for policies in Sparkta Swagger API
 		| cubes[0].operators | DELETE | N/A |
 		Then the service response status must be '200'.	
 		And I save element '$.id' in attribute 'previousPolicyID'
-		# Delete incorrectly created policy
+		# Delete created policy
 		When I send a 'DELETE' request to 'policy/!{previousPolicyID}'
 		Then the service response status must be '200'.	
 	
@@ -195,11 +195,11 @@ Feature: Test all POST operations for policies in Sparkta Swagger API
 		| id | DELETE | N/A |
 		| name | UPDATE | policyMissingCubes |
 		| cubes | DELETE | N/A |
-		Then the service response status must be '500' and its response must contain the text 'It is mandatory to define one cube in the policy.'
-		And I save element '$.id' in attribute 'previousPolicyID'
-		# Delete incorrectly created policy
-		When I send a 'DELETE' request to 'policy/!{previousPolicyID}'
-		Then the service response status must be '200'.
+		Then the service response status must be '400' and its response must contain the text 'No usable value for Cubes. Array is too short: must have at least 1 elements but instance has 0 elements.'
+#		And I save element '$.id' in attribute 'previousPolicyID'
+#		# Delete incorrectly created policy
+#		When I send a 'DELETE' request to 'policy/!{previousPolicyID}'
+#		Then the service response status must be '200'.
 		
 	Scenario: Add a policy with missing name
 		When I send a 'POST' request to 'policy' based on 'schemas/policies/policy.conf' as 'json' with:
@@ -208,19 +208,19 @@ Feature: Test all POST operations for policies in Sparkta Swagger API
 		| name | DELETE | N/A |
 		Then the service response status must be '400' and its response must contain the text 'No usable value for name'
 	
-	Scenario: Clean up
-		When I send a 'GET' request to 'policy/findByName/policyMissingDimensions'
-		Then the service response status must be '200'.
-		And I save element '$.id' in attribute 'previousPolicyID'
-		When I send a 'DELETE' request to 'policy/!{previousPolicyID}'
-		Then the service response status must be '200'.
-		When I send a 'GET' request to 'policy/findByName/policyMissingOperators'
-		Then the service response status must be '200'.
-		And I save element '$.id' in attribute 'previousPolicyID'
-		When I send a 'DELETE' request to 'policy/!{previousPolicyID}'
-		Then the service response status must be '200'.
-		When I send a 'GET' request to 'policy/findByName/policyMissingCubes'
-		Then the service response status must be '200'.
-		And I save element '$.id' in attribute 'previousPolicyID'
-		When I send a 'DELETE' request to 'policy/!{previousPolicyID}'
-		Then the service response status must be '200'.
+#	Scenario: Clean up
+#		When I send a 'GET' request to 'policy/findByName/policyMissingDimensions'
+#		Then the service response status must be '200'.
+#		And I save element '$.id' in attribute 'previousPolicyID'
+#		When I send a 'DELETE' request to 'policy/!{previousPolicyID}'
+#		Then the service response status must be '200'.
+#		When I send a 'GET' request to 'policy/findByName/policymissingoperators'
+#		Then the service response status must be '200'.
+#		And I save element '$.id' in attribute 'previousPolicyID'
+#		When I send a 'DELETE' request to 'policy/!{previousPolicyID}'
+#		Then the service response status must be '200'.
+#		When I send a 'GET' request to 'policy/findByName/policyMissingCubes'
+#		Then the service response status must be '200'.
+#		And I save element '$.id' in attribute 'previousPolicyID'
+#		When I send a 'DELETE' request to 'policy/!{previousPolicyID}'
+#		Then the service response status must be '200'.

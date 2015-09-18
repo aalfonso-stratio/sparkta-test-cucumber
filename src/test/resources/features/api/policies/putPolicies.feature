@@ -42,7 +42,7 @@ Feature: Test all PUT operations for policies in Sparkta Swagger API
 		| fragments | DELETE | N/A |
 		| id | UPDATE | !{previousPolicyID} |
 		| input | DELETE | N/A |
-		Then the service response status must be '404' and its response must contain the text 'It is mandatory to define one input in the policy.'
+		Then the service response status must be '500' and its response must contain the text 'It is mandatory to define one input in the policy.'
 		
 	# There is no validation
 	# This test will fail
@@ -53,7 +53,7 @@ Feature: Test all PUT operations for policies in Sparkta Swagger API
 		| fragments | DELETE | N/A |
 		| id | UPDATE | !{previousPolicyID} |
 		| outputs | DELETE | N/A |
-		Then the service response status must be '404' and its response must contain the text 'It is mandatory to define at least one output in the policy.'
+		Then the service response status must be '500' and its response must contain the text 'It is mandatory to define at least one output in the policy.'
 	
 	# There is no validation
 	# This test will fail
@@ -64,7 +64,7 @@ Feature: Test all PUT operations for policies in Sparkta Swagger API
 		| fragments | DELETE | N/A |
 		| id | UPDATE | !{previousPolicyID} |
 		| cubes | DELETE | N/A |
-		Then the service response status must be '404' and its response must contain the text 'It is mandatory to define one cube in the policy.'
+		Then the service response status must be '400' and its response must contain the text 'No usable value for Cubes. Array is too short: must have at least 1 elements but instance has 0 elements.'
 	
 	# There is no validation
 	# This test will fail
@@ -85,7 +85,7 @@ Feature: Test all PUT operations for policies in Sparkta Swagger API
 		| fragments[0].fragmentType | UPDATE | input |
 		| fragments[1] | DELETE | N/A |
 		| id | UPDATE | !{previousPolicyID} |
-		Then the service response status must be '404' and its response must contain the text 'Only one input is allowed in the policy.'
+		Then the service response status must be '500' and its response must contain the text 'Only one input is allowed in the policy.'
 	
 	# There is no validation
 	# This test will fail
@@ -107,19 +107,16 @@ Feature: Test all PUT operations for policies in Sparkta Swagger API
 		| fragments | DELETE | N/A |
 		| id | UPDATE | !{previousPolicyID} |
 		| cubes[0].dimensions | DELETE | N/A |
-		Then the service response status must be '400' and its response must contain the text 'No usable value for dimensions'
+		Then the service response status must be '400' and its response must contain the text 'No usable value for Cubes-dimensions. Array is too short: must have at least 1 elements but instance has 0 elements.'
 	
-	# There is no validation
-	# This test will fail
-	# Issue: 834
 	Scenario: Update a policy with missing operators inside cubes
 		When I send a 'PUT' request to 'policy' based on 'schemas/policies/policy.conf' as 'json' with:
 		| name | UPDATE | validpolicy |
 		| fragments | DELETE | N/A |
 		| id | UPDATE | !{previousPolicyID} |
 		| cubes[0].operators | DELETE | N/A |
-		Then the service response status must be '400' and its response must contain the text 'No usable value for operators'
-
+		Then the service response status must be '201'.
+		
 	Scenario: Update a existing policy
 		When I send a 'PUT' request to 'policy' based on 'schemas/policies/policy.conf' as 'json' with:
 		| name | UPDATE | newvalidpolicy |

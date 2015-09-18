@@ -39,7 +39,7 @@ Feature: Test all POST operations for policyContexts in Sparkta Swagger API
 		| fragments | DELETE | N/A |
 		| id | DELETE | N/A |
 		| cubes | DELETE | N/A |	
-		Then the service response status must be '400' and its response must contain the text 'error: array is too short: must have at least 1 elements but instance has 0 elements'
+		Then the service response status must be '400' and its response must contain the text 'No usable value for Cubes. Array is too short: must have at least 1 elements but instance has 0 elements.'
 	
 	Scenario: Add a policyContext with non-existing fragment
 		When I send a 'POST' request to 'policyContext' based on 'schemas/policies/policy.conf' as 'json' with:

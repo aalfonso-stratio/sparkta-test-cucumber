@@ -1,5 +1,5 @@
 @web @rest
-Feature: Test editing a input in Sparkta GUI
+Feature: Test editing an input in Sparkta GUI
 		
 	Background: Setup Sparkta GUI
 		Given I set web base url to '${SPARKTA_HOST}':'${SPARKTA_PORT}'
@@ -33,7 +33,17 @@ Feature: Test editing a input in Sparkta GUI
 		When I click on the element on index '0'
 		# Error message should appear
 		Then '1' element exists with 'css:span[data-qa="fragment-detail-name-error-required"]'
-			
+		
+		# Try name with spaces
+		Given '1' element exists with 'css:input[data-qa="fragment-detail-name"]'
+		Then I type 'valid Flume Input' on the element on index '0'
+		Given '1' element exists with 'css:button[data-qa="modal-ok-button"]'
+		When I click on the element on index '0'
+		# Error message should appear
+		Then '1' element exists with 'css:span[data-qa="fragment-detail-name-error-pattern"]'
+		Given '1' element exists with 'css:input[data-qa="fragment-detail-name"]'
+		Then I send 'HOME, SHIFT + END, DELETE' on the element on index '0'
+		
 		# Make sure we are in pull in drop-down
 		Given '1' element exists with 'css:select[data-qa="fragment-details-flume-type"]'
 		Then I select 'pull' on the element on index '0'

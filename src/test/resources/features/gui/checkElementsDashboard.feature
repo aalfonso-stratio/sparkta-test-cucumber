@@ -16,11 +16,15 @@ Feature: Test all expected elements are present in Sparkta GUI
 		Then I wait '2' seconds
 		And we are in page '#/dashboard/inputs'
 
+		Given I browse to '#/dashboard'
+		Then I wait '2' seconds
 		Given '1' elements exists with 'css:a[data-qa="dashboard-menu-outputs"]'
 		When I click on the element on index '0'
 		Then I wait '2' seconds
 		And we are in page '#/dashboard/outputs'
 		
+		Given I browse to '#/dashboard'
+		Then I wait '2' seconds
 		Given '1' elements exists with 'css:a[data-qa="dashboard-menu-policies"]'
 		When I click on the element on index '0'
 		Then I wait '2' seconds

@@ -181,7 +181,7 @@ Feature: Test all POST operations for policies in Sparkta Swagger API
 		| id | DELETE | N/A |
 		| name | UPDATE | policyMissingOperators |
 		| cubes[0].operators | DELETE | N/A |
-		Then the service response status must be '400' and its response must contain the text 'No usable value for operators'	
+		Then the service response status must be '200'.	
 		And I save element '$.id' in attribute 'previousPolicyID'
 		# Delete incorrectly created policy
 		When I send a 'DELETE' request to 'policy/!{previousPolicyID}'

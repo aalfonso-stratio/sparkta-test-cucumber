@@ -20,9 +20,6 @@ Feature: Test all PUT operations for policyContexts in Sparkta Swagger API
 		| status | UPDATE | Stopped |
 		Then the service response status must be '404' and its response must contain the text 'No policy with id nonexistingid'.
 	
-	# This test will fail.
-	# Not possible to change status.
-	# Issue: 830
 	Scenario: Update a existing policyContext
 		# Add policy context
 		When I send a 'POST' request to 'policyContext' based on 'schemas/policies/policy.conf' as 'json' with:
@@ -43,8 +40,6 @@ Feature: Test all PUT operations for policyContexts in Sparkta Swagger API
 		When I send a 'GET' request to 'policyContext'
 		Then the service response status must be '200' and its response must contain the text '"status":"Stopped"'
 
-	# This test will fail. Policy is listed, but not possible to delete.
-	# Issue 831
 	Scenario: Clean up
 		When I send a 'DELETE' request to 'policy/!{previousPolicyID}'
 		Then the service response status must be '200'.

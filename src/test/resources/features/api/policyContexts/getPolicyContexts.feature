@@ -2,7 +2,7 @@
 Feature: Test all Get operations for policyContexts in Sparkta Swagger API
 
 	Background: Setup Sparkta REST client
-		Given I send requests to 'localhost':'9091'
+		Given I send requests to '${SPARKTA_HOST}':'${SPARKTA_API_PORT}'
 		
 	Scenario: Get all policyContexts when none available
 		When I send a 'GET' request to 'policyContext'

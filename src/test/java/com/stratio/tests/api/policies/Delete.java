@@ -7,7 +7,7 @@ import com.stratio.tests.utils.BaseTest;
 
 import cucumber.api.CucumberOptions;
 
-@CucumberOptions(features = { "src/test/resources/features/api/deletePolicies.feature" })
+@CucumberOptions(features = { "src/test/resources/features/api/policies/deletePolicies.feature" })
 public class Delete extends BaseTest {
 
     public Delete() {

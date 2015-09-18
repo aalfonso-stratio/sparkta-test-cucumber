@@ -2,7 +2,7 @@
 Feature: Test all PUT operations for fragments in Sparkta Swagger API
 
 	Background: Setup Sparkta REST client
-		Given I send requests to 'localhost':'9091'
+		Given I send requests to '${SPARKTA_HOST}':'${SPARKTA_API_PORT}'
 		
 		Scenario: Update a fragment using empty parameter
 		Given I send a 'PUT' request to 'fragment' as 'json'

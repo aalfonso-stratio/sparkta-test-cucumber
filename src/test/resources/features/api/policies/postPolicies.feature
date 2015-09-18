@@ -2,7 +2,7 @@
 Feature: Test all POST operations for policies in Sparkta Swagger API
 
 	Background: Setup Sparkta REST client
-		Given I send requests to 'localhost':'9091'
+		Given I send requests to '${SPARKTA_HOST}':'${SPARKTA_API_PORT}'
 
 	Scenario: Add a policy with empty data
 		Given I send a 'POST' request to 'policy' as 'json'

@@ -2,7 +2,7 @@
 Feature: Test all POST operations for policyContexts in Sparkta Swagger API
 
 	Background: Setup Sparkta REST client
-		Given I send requests to 'localhost':'9091'
+		Given I send requests to '${SPARKTA_HOST}':'${SPARKTA_API_PORT}'
 
 	Scenario: Add a policyContext with empty parameter
 		When I send a 'POST' request to 'policyContext' as 'json'

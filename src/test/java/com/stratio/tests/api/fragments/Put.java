@@ -7,7 +7,7 @@ import com.stratio.tests.utils.BaseTest;
 
 import cucumber.api.CucumberOptions;
 
-@CucumberOptions(features = { "src/test/resources/features/api/putFragments.feature" })
+@CucumberOptions(features = { "src/test/resources/features/api/fragments/putFragments.feature" })
 public class Put extends BaseTest {
 
     public Put() {

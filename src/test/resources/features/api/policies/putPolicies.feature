@@ -2,7 +2,7 @@
 Feature: Test all PUT operations for policies in Sparkta Swagger API
 
 	Background: Setup Sparkta REST client
-		Given I send requests to 'localhost':'9091'
+		Given I send requests to '${SPARKTA_HOST}':'${SPARKTA_API_PORT}'
 
 	Scenario: Update a policy using empty parameter
 		When I send a 'PUT' request to 'policy' as 'json'

@@ -2,7 +2,7 @@
 Feature: Test all GET operations for policies in Sparkta Swagger API
 	
 	Background: Setup Sparkta REST client
-		Given I send requests to 'localhost':'9091'
+		Given I send requests to '${SPARKTA_HOST}':'${SPARKTA_API_PORT}'
 			
 	Scenario: Get all available policies when none available
 		When I send a 'GET' request to 'policy/all'

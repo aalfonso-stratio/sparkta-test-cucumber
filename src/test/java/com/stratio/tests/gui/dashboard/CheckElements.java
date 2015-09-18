@@ -9,7 +9,7 @@ import com.stratio.tests.utils.BaseTest;
 
 import cucumber.api.CucumberOptions;
 
-@CucumberOptions(features = { "src/test/resources/features/gui/checkElementsDashboard.feature" })
+@CucumberOptions(features = { "src/test/resources/features/gui/dashboard/checkElementsDashboard.feature" })
 public class CheckElements extends BaseTest {
     
     @Factory(enabled = false, dataProviderClass = BrowsersDataProvider.class, dataProvider = "availableUniqueBrowsers")

@@ -2,7 +2,7 @@
 Feature: Test all DELETE operations for policies in Sparkta Swagger API
 
 	Background: Setup Sparkta REST client
-		Given I send requests to 'localhost':'9091'
+		Given I send requests to '${SPARKTA_HOST}':'${SPARKTA_API_PORT}'
 		
 	Scenario: Delete a policy when no policies available
 		When I send a 'DELETE' request to 'policy/nonExistingId'

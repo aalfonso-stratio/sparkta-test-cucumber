@@ -7,7 +7,7 @@ import com.stratio.tests.utils.BaseTest;
 
 import cucumber.api.CucumberOptions;
 
-@CucumberOptions(features = { "src/test/resources/features/api/getPolicies.feature" })
+@CucumberOptions(features = { "src/test/resources/features/api/policies/getPolicies.feature" })
 public class Get extends BaseTest {
 
     public Get() {

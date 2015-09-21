@@ -2,11 +2,11 @@
 Feature: Test adding a new Kafka Direct input in Sparkta GUI
 		
 	Background: Setup Sparkta GUI
-		Given I set web base url to '${SPARKTA_HOST}':'${SPARKTA_PORT}'
-		Given I send requests to '${SPARKTA_HOST}':'${SPARKTA_API_PORT}'
+		Given I set web base url to '${SPARKTA_HOST}:${SPARKTA_PORT}'
+		Given I send requests to '${SPARKTA_HOST}:${SPARKTA_API_PORT}'
 	
 	Scenario: Try to add a new input
-		Given I browse to '#/dashboard/inputs'
+		Given I browse to '/#/dashboard/inputs'
 		Then I wait '1' second
 		Then '1' element exists with 'css:button[data-qa="inputs-new-button"]'
 		When I click on the element on index '0'
@@ -99,7 +99,7 @@ Feature: Test adding a new Kafka Direct input in Sparkta GUI
 		When I click on the element on index '0'
 		# Check that input fragment has been created
 		# Retrieve input fragment id using api
-		When I send a 'GET' request to 'fragment/input/name/validkafkadirectinput'
+		When I send a 'GET' request to '/fragment/input/name/validkafkadirectinput'
 		Then the service response status must be '200'.
 		And I save element '$.id' in attribute 'previousFragmentID'
 		# Check that an input element has been created

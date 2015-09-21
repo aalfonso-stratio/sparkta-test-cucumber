@@ -2,11 +2,11 @@
 Feature: Test adding a new Redis output in Sparkta GUI
 		
 	Background: Setup Sparkta GUI
-		Given I set web base url to '${SPARKTA_HOST}':'${SPARKTA_PORT}'
-		Given I send requests to '${SPARKTA_HOST}':'${SPARKTA_API_PORT}'
+		Given I set web base url to '${SPARKTA_HOST}:${SPARKTA_PORT}'
+		Given I send requests to '${SPARKTA_HOST}:${SPARKTA_API_PORT}'
 		
 	Scenario: Try to add a new input
-		Given I browse to '#/dashboard/outputs'
+		Given I browse to '/#/dashboard/outputs'
 		Then I wait '1' second
 		Then '1' element exists with 'css:button[data-qa="outputs-new-button"]'
 		When I click on the element on index '0'
@@ -87,7 +87,7 @@ Feature: Test adding a new Redis output in Sparkta GUI
 		
 		# Check that output fragment has been created
 		# Retrieve output fragment id using api
-		When I send a 'GET' request to 'fragment/output/name/validredisoutput'
+		When I send a 'GET' request to '/fragment/output/name/validredisoutput'
 		Then the service response status must be '200'.
 		And I save element '$.id' in attribute 'previousFragmentID'
 		# Check that an output element has been created

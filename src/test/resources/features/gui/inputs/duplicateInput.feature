@@ -2,21 +2,21 @@
 Feature: Test duplicating an input in Sparkta GUI
 		
 	Background: Setup Sparkta GUI
-		Given I set web base url to '${SPARKTA_HOST}':'${SPARKTA_PORT}'
-		Given I send requests to '${SPARKTA_HOST}':'${SPARKTA_API_PORT}'
+		Given I set web base url to '${SPARKTA_HOST}:${SPARKTA_PORT}'
+		Given I send requests to '${SPARKTA_HOST}:${SPARKTA_API_PORT}'
 		
 	Scenario: Try to duplicate an existing input
-		Given I send a 'POST' request to 'fragment' based on 'schemas/fragments/fragment.conf' as 'json' with:
+		Given I send a 'POST' request to '/fragment' based on 'schemas/fragments/fragment.conf' as 'json' with:
 		| id | DELETE | N/A |
 		| fragmentType | UPDATE | input |
 		| name | UPDATE | inputfragment1 |
 		| element.type | UPDATE | Flume |
 		Then the service response status must be '200'.
 		And I save element '$.id' in attribute 'previousFragmentID'
-		When I send a 'GET' request to 'fragment/input'
+		When I send a 'GET' request to '/fragment/input'
 		Then the service response status must be '200' and its response length must be '1'
 
-		Given I browse to '#/dashboard/inputs'
+		Given I browse to '/#/dashboard/inputs'
 		Then I wait '1' second
 		Given '1' element exists with 'css:span[data-qa="input-context-menu-!{previousFragmentID}"]'
 		Then I click on the element on index '0'
@@ -62,7 +62,7 @@ Feature: Test duplicating an input in Sparkta GUI
 		
 		# Check that input fragment has been created
 		# Retrieve input fragment id using api
-		When I send a 'GET' request to 'fragment/input/name/inputfragment1bis'
+		When I send a 'GET' request to '/fragment/input/name/inputfragment1bis'
 		Then the service response status must be '200'.
 		And I save element '$.id' in attribute 'previousFragmentID_2'
 		# Check that an input element has been created
@@ -70,8 +70,8 @@ Feature: Test duplicating an input in Sparkta GUI
 		And '1' element exists with 'css:span[data-qa="input-context-menu-!{previousFragmentID}"]'
 		
 		Scenario: Delete everything
-		When I send a 'DELETE' request to 'fragment/input/!{previousFragmentID}'
+		When I send a 'DELETE' request to '/fragment/input/!{previousFragmentID}'
 		Then the service response status must be '200'.
-		When I send a 'DELETE' request to 'fragment/input/!{previousFragmentID_2}'
+		When I send a 'DELETE' request to '/fragment/input/!{previousFragmentID_2}'
 		Then the service response status must be '200'.
 		

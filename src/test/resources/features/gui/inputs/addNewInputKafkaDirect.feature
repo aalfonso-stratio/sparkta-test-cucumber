@@ -14,7 +14,7 @@ Feature: Test adding a new Kafka Direct input in Sparkta GUI
 		And '1' element exists with 'css:aside[data-qa="fragment-details-modal"]'
 		
 		# Select kafka direct
-		Given '1' element exists with 'css:label[data-qa="fragment-detail-type-kafka direct"]'
+		Given '1' element exists with 'css:label[data-qa="fragment-detail-type-kafkadirect"]'
 		When I click on the element on index '0'
 		Then I wait '1' second
 		
@@ -111,7 +111,7 @@ Feature: Test adding a new Kafka Direct input in Sparkta GUI
 		Then I wait '1' second
 		And '1' element exists with 'css:aside[data-qa="fragment-details-modal"]'
 		# Select kafka direct
-		Given '1' element exists with 'css:label[data-qa="fragment-detail-type-kafka direct"]'
+		Given '1' element exists with 'css:label[data-qa="fragment-detail-type-kafkadirect"]'
 		When I click on the element on index '0'
 		Then I wait '1' second
 		# Fill in name field

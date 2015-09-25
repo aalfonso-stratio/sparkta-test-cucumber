@@ -364,9 +364,34 @@ Feature: Test adding a new policy in Sparkta GUI
 		Then I click on the element on index '0'
 
 		# Screen 6/6
-
-
-
+		# Press previous
+		Given '1' element exists with 'css:button[data-qa="policy-cube-previous-button"]'
+		Then I click on the element on index '0'
+		Given '1' element exists with 'css:button[data-qa="policy-outputs-next-button"]'
+		Then I click on the element on index '0'
+		Given '1' element exists with 'css:button[data-qa="policy-save-button"]'
+		Then I click on the element on index '0'
+		
+		Given '1' element exists with 'css:aside[data-qa="confirm-modal"]'
+		And '1' element exists with 'css:button[data-qa="modal-ok-button"]'
+		Then I click on the element on index '0'
+		And '1' element exists with 'css:i[data-qa^="input-context-menu-"]'
+		
+		# Try to add the same policy
+		Given '1' element exists with 'css:button[data-qa="policies-new-button"]'
+		Then I click on the element on index '0'
+		
+		# Fill in everything and click Continue
+		Given '1' element exists with 'css:input[data-qa="policy-description-name"]'
+		Then I type 'myPolicy' on the element on index '0'
+		Given '1' element exists with 'css:input[data-qa="policy-description-description"]'
+		Then I type 'my Policy Description' on the element on index '0'
+		Given '1' element exists with 'css:button[data-qa="policy-description-next-button"]'
+		When I click on the element on index '0'
+		Then '1' element exists with 'css:div[data-qa="error-msg"]'
+		
+		Given '1' element exists with 'css:a[data-qa="dashboard-menu-policies"]'
+		Then I click on the element on index '0'		
 		
 		# Delete fragments
 		When I send a 'DELETE' request to '/fragment/input/!{previousFragmentID}'
@@ -378,8 +403,4 @@ Feature: Test adding a new policy in Sparkta GUI
 		When I send a 'GET' request to '/fragment/output'
 		Then the service response status must be '200' and its response must contain the text '[]'
 
-				
-		
-		
-		
 		

@@ -318,6 +318,7 @@ Feature: Test adding a new policy in Sparkta GUI
 		
 		# Add cube
 		Given '1' element exists with 'css:button[data-qa="policy-cube-add-button"]'
+		Then I click on the element on index '0'
 		Then '2' elements exist with 'css:i[data-qa^="policy-cube-arrow-"]'
 		
 		## !! TODO Delete cube
@@ -347,22 +348,35 @@ Feature: Test adding a new policy in Sparkta GUI
 		When I send a 'GET' request to '/fragment/output'
 		Then the service response status must be '200' and its response length must be '1'
 		
-		# Screen 5/6 (1 input available)
+		# Screen 5/6 (1 output available)
 		Given '1' element exists with 'css:button[data-qa="policy-cube-next-button"]'
 		When I click on the element on index '0'
 		Then '1' element exists with 'css:div[data-qa^="policy-output-item"]'
 		
+		Given '1' element exists with 'css:button[data-qa="policy-outputs-next-button"]'
+		When I click on the element on index '0'
+		Then '1' element exists with 'css:div[data-qa="error-msg"]'
 		
+		Given '1' element exists with 'css:div[data-qa="policy-output-item-!{previousFragmentID_2}"]'
+		Then I click on the element on index '0'
 		
-#		# Delete fragments
+		Given '1' element exists with 'css:button[data-qa="policy-outputs-next-button"]'
+		Then I click on the element on index '0'
+
+		# Screen 6/6
+
+
+
+		
+		# Delete fragments
 		When I send a 'DELETE' request to '/fragment/input/!{previousFragmentID}'
 		Then the service response status must be '200'.
 		When I send a 'GET' request to '/fragment/input'
 		Then the service response status must be '200' and its response must contain the text '[]'
-#		When I send a 'DELETE' request to '/fragment/output/!{previousFragmentID_2}'
-#		Then the service response status must be '200'.
-#		When I send a 'GET' request to '/fragment/output'
-#		Then the service response status must be '200' and its response must contain the text '[]'
+		When I send a 'DELETE' request to '/fragment/output/!{previousFragmentID_2}'
+		Then the service response status must be '200'.
+		When I send a 'GET' request to '/fragment/output'
+		Then the service response status must be '200' and its response must contain the text '[]'
 
 				
 		

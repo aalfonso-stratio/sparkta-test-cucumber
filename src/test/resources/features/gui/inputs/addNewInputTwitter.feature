@@ -14,7 +14,7 @@ Feature: Test adding a new Twitter input in Sparkta GUI
 		And '1' element exists with 'css:aside[data-qa="fragment-details-modal"]'
 		
 		# Select Twitter
-		Given '1' element exists with 'css:label[data-qa="fragment-detail-type-twitter"]'
+		Given '1' element exists with 'css:label[data-qa="fragment-detail-type-twitterjson"]'
 		When I click on the element on index '0'
 		Then I wait '1' second
 		
@@ -70,8 +70,8 @@ Feature: Test adding a new Twitter input in Sparkta GUI
 		When I click on the element on index '0'
 		Then I wait '1' second
 		And '1' element exists with 'css:aside[data-qa="fragment-details-modal"]'
-		# Select Socket
-		Given '1' element exists with 'css:label[data-qa="fragment-detail-type-twitter"]'
+		# Select Twitter
+		Given '1' element exists with 'css:label[data-qa="fragment-detail-type-twitterjson"]'
 		When I click on the element on index '0'
 		Then I wait '1' second
 		# Fill in name field

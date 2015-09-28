@@ -133,7 +133,69 @@ Feature: Test adding a new policy in Sparkta GUI
 		# Add empty output field
 		Given '1' element exists with 'css:i[data-qa="policy-model-outputs-add-button"]'
 		When I click on the element on index '0'
-		Then '0' elements exists with 'css:span[data-qa="policy-model-output-list-0"]'
+		Then '0' elements exist with 'css:span[data-qa="policy-model-output-list-0"]'
+		# Add output field
+		Given '1' element exists with 'css:input[data-qa="policy-model-outputs"]'
+		Then I type 'myOutput' on the element on index '0'
+		Given '1' element exists with 'css:i[data-qa="policy-model-outputs-add-button"]'
+		When I click on the element on index '0'
+		Then '1' element exists with 'css:span[data-qa="policy-model-output-list-0"]'
+		
+		# Add same output field
+		Given '1' element exists with 'css:input[data-qa="policy-model-outputs"]'
+		Then I type 'myOutput' on the element on index '0'
+		Given '1' element exists with 'css:i[data-qa="policy-model-outputs-add-button"]'
+		When I click on the element on index '0'
+		Then '1' element exists with 'css:div[data-qa="policy-modal-error-msg-outputs"]'
+		And '1' element exists with 'css:span[data-qa^="policy-model-output-list-"]'
+		
+		# Add model (Morphline)
+		Given '1' element exists with 'css:button[data-qa="policy-model-add-button"]'
+		Then I click on the element on index '0'
+		
+		# Delete model
+		Given '1' element exists with 'css:i[data-qa="policy-model-arrow-2"]'
+		Then I click on the element on index '0'
+		
+		Given '1' element exists with 'css:i[data-qa="policy-model-arrow-1"]'
+		Then I click on the element on index '0'
+		
+		Given '1' element exists with 'css:button[data-qa="policy-model-delete-button"]'
+		When I click on the element on index '0'
+		Then '1' element exists with 'css:aside[data-qa="confirm-modal"]'
+		
+		And '1' element exists with 'css:button[data-qa="modal-ok-button"]'
+		And I click on the element on index '0'
+		
+		# Fill in model (Datetime)
+		Given '1' element exists with 'css:label[data-qa="policy-model-type-datetime"]'
+		Then I click on the element on index '0'
+		
+		Given '1' element exists with 'css:button[data-qa="policy-model-add-button"]'
+		When I click on the element on index '0'
+		Then '1' element exists with 'css:div[data-qa="policy-modal-error-msg-accordion"]'
+		
+		Given '1' element exists with 'css:input[data-qa="policy-model-name"]'
+		Then I type 'myModel' on the element on index '0'		
+		
+		# Try with empty Configuration
+		Given '1' element exists with 'css:textarea[data-qa="policy-model-configuration-textarea"]'
+		Then I clear the content on text input at index '0'
+		Given '1' element exists with 'css:button[data-qa="policy-model-add-button"]'
+		When I click on the element on index '0'
+		Then '1' element exists with 'css:div[data-qa="policy-modal-error-msg-accordion"]'
+		
+		# Fill Configuration
+		Given '1' element exists with 'css:textarea[data-qa="policy-model-configuration-textarea"]'
+		Then I type '{}' on the element on index '0'
+	
+		# Add empty output field
+		Given '1' element exists with 'css:input[data-qa="policy-model-outputs"]'
+		Then I send 'HOME, SHIFT + END, DELETE' on the element on index '0'
+		Given '1' element exists with 'css:i[data-qa="policy-model-outputs-add-button"]'
+		When I click on the element on index '0'
+		
+		Then '0' elements exist with 'css:span[data-qa="policy-model-output-list-0"]'
 		# Add output field
 		Given '1' element exists with 'css:input[data-qa="policy-model-outputs"]'
 		Then I type 'myOutput' on the element on index '0'
@@ -153,25 +215,62 @@ Feature: Test adding a new policy in Sparkta GUI
 		Given '1' element exists with 'css:button[data-qa="policy-model-add-button"]'
 		Then I click on the element on index '0'
 		
-#		# Delete model
-#		Given '1' element exists with 'css:i[data-qa="policy-model-arrow-1"]'
-#		Then I click on the element on index '0'
-#		Given '1' element exists with 'css:button[data-qa="policy-model-delete-button"]'
-#		When I click on the element on index '0'
-#		Then '1' element exists with 'css:aside[data-qa="confirm-modal"]'
-#		And '1' element exists with 'css:button[data-qa="modal-ok-button"]'
-#		And I click on the element on index '0'
-#		
-#		# Fill in model
-#		Given '1' element exists with 'css:input[data-qa="policy-model-name"]'
-#		Then I type 'myModel' on the element on index '0'
-#		Given '1' element exists with 'css:input[data-qa="policy-model-outputs"]'
-#		Then I type 'myOutput' on the element on index '0'
-#		Given '1' element exists with 'css:i[data-qa="policy-model-outputs-add-button"]'
-#		When I click on the element on index '0'
-#		Then '1' element exists with 'css:span[data-qa="policy-model-output-list-0"]'
-#		Given '1' element exists with 'css:button[data-qa="policy-model-add-button"]'
-#		Then I click on the element on index '0'		
+		# Delete model
+		Given '1' element exists with 'css:i[data-qa="policy-model-arrow-2"]'
+		Then I click on the element on index '0'
+		Given '1' element exists with 'css:i[data-qa="policy-model-arrow-1"]'
+		Then I click on the element on index '0'
+		Given '1' element exists with 'css:button[data-qa="policy-model-delete-button"]'
+		When I click on the element on index '0'
+		Then '1' element exists with 'css:aside[data-qa="confirm-modal"]'
+		And '1' element exists with 'css:button[data-qa="modal-ok-button"]'
+		And I click on the element on index '0'
+		
+		# Fill in model (Type)
+		Given '1' element exists with 'css:label[data-qa="policy-model-type-type"]'
+		Then I click on the element on index '0'
+		Given '1' element exists with 'css:button[data-qa="policy-model-add-button"]'
+		When I click on the element on index '0'
+		Then '1' element exists with 'css:div[data-qa="policy-modal-error-msg-accordion"]'
+		
+		Given '1' element exists with 'css:input[data-qa="policy-model-name"]'
+		Then I type 'myModel' on the element on index '0'
+		
+		# Try with empty Configuration
+		Given '1' element exists with 'css:textarea[data-qa="policy-model-configuration-textarea"]'
+		Then I clear the content on text input at index '0'
+		Given '1' element exists with 'css:button[data-qa="policy-model-add-button"]'
+		When I click on the element on index '0'
+		Then '1' element exists with 'css:div[data-qa="policy-modal-error-msg-accordion"]'
+		
+		# Fill Configuration
+		Given '1' element exists with 'css:textarea[data-qa="policy-model-configuration-textarea"]'
+		Then I type '{}' on the element on index '0'
+	
+		# Add empty output field
+		Given '1' element exists with 'css:input[data-qa="policy-model-outputs"]'
+		Then I send 'HOME, SHIFT + END, DELETE' on the element on index '0'
+		Given '1' element exists with 'css:i[data-qa="policy-model-outputs-add-button"]'
+		When I click on the element on index '0'
+		Then '0' elements exists with 'css:span[data-qa="policy-model-output-list-0"]'
+		# Add output field
+		Given '1' element exists with 'css:input[data-qa="policy-model-outputs"]'
+		Then I type 'myOutput' on the element on index '0'
+		Given '1' element exists with 'css:i[data-qa="policy-model-outputs-add-button"]'
+		When I click on the element on index '0'
+		Then '1' element exists with 'css:span[data-qa="policy-model-output-list-0"]'
+		
+		# Add same output field
+		Given '1' element exists with 'css:input[data-qa="policy-model-outputs"]'
+		Then I type 'myOutput' on the element on index '0'
+		Given '1' element exists with 'css:i[data-qa="policy-model-outputs-add-button"]'
+		When I click on the element on index '0'
+		Then '1' element exists with 'css:div[data-qa="policy-modal-error-msg-outputs"]'
+		And '1' element exists with 'css:span[data-qa^="policy-model-output-list-"]'
+		
+		# Add model
+		Given '1' element exists with 'css:button[data-qa="policy-model-add-button"]'
+		Then I click on the element on index '0'
 		
 		# Continue
 		Given '1' element exists with 'css:button[data-qa="policy-model-next-button"]'
@@ -269,6 +368,9 @@ Feature: Test adding a new policy in Sparkta GUI
 		Then '2' element exists with 'css:div[data-qa^="policy-cube-dimensionslist-"]'
 		# Delete first dimension created
 		When I click on the element on index '1'
+		Then '1' element exists with 'css:aside[data-qa="confirm-modal"]'
+		And '1' element exists with 'css:button[data-qa="modal-ok-button"]'
+		When I click on the element on index '0'
 		Then '1' element exists with 'css:div[data-qa^="policy-cube-dimensionslist-"]'
 		
 		# Add Functions
@@ -314,6 +416,9 @@ Feature: Test adding a new policy in Sparkta GUI
 		Then '2' elements exist with 'css:div[data-qa^="policy-cube-operatorlist-"]'
 		# Delete one operator
 		Given I click on the element on index '1'
+		Then '1' element exists with 'css:aside[data-qa="confirm-modal"]'
+		And '1' element exists with 'css:button[data-qa="modal-ok-button"]'
+		When I click on the element on index '0'
 		Then '1' element exists with 'css:div[data-qa^="policy-cube-operatorlist-"]'
 		
 		# Add cube
@@ -393,14 +498,14 @@ Feature: Test adding a new policy in Sparkta GUI
 		Given '1' element exists with 'css:a[data-qa="dashboard-menu-policies"]'
 		Then I click on the element on index '0'		
 		
-		# Delete fragments
-		When I send a 'DELETE' request to '/fragment/input/!{previousFragmentID}'
-		Then the service response status must be '200'.
-		When I send a 'GET' request to '/fragment/input'
-		Then the service response status must be '200' and its response must contain the text '[]'
-		When I send a 'DELETE' request to '/fragment/output/!{previousFragmentID_2}'
-		Then the service response status must be '200'.
-		When I send a 'GET' request to '/fragment/output'
-		Then the service response status must be '200' and its response must contain the text '[]'
+#		# Delete fragments
+#		When I send a 'DELETE' request to '/fragment/input/!{previousFragmentID}'
+#		Then the service response status must be '200'.
+#		When I send a 'GET' request to '/fragment/input'
+#		Then the service response status must be '200' and its response must contain the text '[]'
+#		When I send a 'DELETE' request to '/fragment/output/!{previousFragmentID_2}'
+#		Then the service response status must be '200'.
+#		When I send a 'GET' request to '/fragment/output'
+#		Then the service response status must be '200' and its response must contain the text '[]'
 
 		

@@ -49,8 +49,8 @@ Feature: Test deleting a policy in Sparkta GUI
 		# Browse to policies
 		Given I browse to '/#/dashboard/policies'
 		Then I wait '2' seconds
-		And '1' element exists with 'css:i[data-qa^="input-context-menu-"]'
-		And '1' element exists with 'css:i[data-qa="input-context-menu-!{previousPolicyID}"]'
+		And '1' element exists with 'css:i[data-qa^="policy-context-menu-"]'
+		And '1' element exists with 'css:i[data-qa="policy-context-menu-!{previousPolicyID}"]'
 		
 		# Press menu
 		Given I click on the element on index '0'
@@ -63,7 +63,7 @@ Feature: Test deleting a policy in Sparkta GUI
 		When I click on the element on index '0'
 		Then '1' element exists with 'css:div[data-qa="manage-policies-error-msg"]'
 		And a text 'The policy has been deleted!' exists
-		And '0' elements exist with 'css:i[data-qa^="input-context-menu-"]'
+		And '0' elements exist with 'css:i[data-qa^="policy-context-menu-"]'
 
 		
 		Scenario: Delete fragments

@@ -155,6 +155,7 @@ Feature: Test adding a new policy in Sparkta GUI
 		
 		# Delete model
 		Given '1' element exists with 'css:i[data-qa="policy-model-arrow-2"]'
+		Then I scroll 'up' '250' pixels
 		Then I click on the element on index '0'
 		
 		Given '1' element exists with 'css:i[data-qa="policy-model-arrow-1"]'
@@ -527,7 +528,7 @@ Feature: Test adding a new policy in Sparkta GUI
 		Given '1' element exists with 'css:aside[data-qa="confirm-modal"]'
 		And '1' element exists with 'css:button[data-qa="modal-ok-button"]'
 		Then I click on the element on index '0'
-		And '1' element exists with 'css:i[data-qa^="input-context-menu-"]'
+		And '1' element exists with 'css:i[data-qa^="policy-context-menu-"]'
 		
 		# Try to add the same policy
 		Given '1' element exists with 'css:button[data-qa="policies-new-button"]'
@@ -545,7 +546,7 @@ Feature: Test adding a new policy in Sparkta GUI
 		Given '1' element exists with 'css:a[data-qa="dashboard-menu-policies"]'
 		Then I click on the element on index '0'		
 		
-		# Delete fragments
+		Scenario: Delete fragments
 		When I send a 'DELETE' request to '/fragment/input/!{previousFragmentID}'
 		Then the service response status must be '200'.
 		When I send a 'GET' request to '/fragment/input'

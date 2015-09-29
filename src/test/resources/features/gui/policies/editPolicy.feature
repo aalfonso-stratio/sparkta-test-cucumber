@@ -49,14 +49,13 @@ Feature: Test editting a policy in Sparkta GUI
 		# Browse to policies
 		Given I browse to '/#/dashboard/policies'
 		Then I wait '2' seconds
-		And '1' element exists with 'css:i[data-qa^="input-context-menu-"]'
-		And '1' element exists with 'css:i[data-qa="input-context-menu-!{previousPolicyID}"]'
+		And '1' element exists with 'css:i[data-qa^="policy-context-menu-"]'
+		And '1' element exists with 'css:i[data-qa="policy-context-menu-!{previousPolicyID}"]'
 		
 		# Press menu
 		Given I click on the element on index '0'
 		Then I wait '1' second
-		#And '1' element exists with 'css:st-menu-element[data-qa="policy-context-menu-!{previousPolicyID}-edit"]'
-		And '1' element exists with 'css:st-menu-element[class-icon="icon-edit2"]'
+		And '1' element exists with 'css:st-menu-element[data-qa="policy-context-menu-!{previousPolicyID}-edit"]'
 				
 		
 #		Scenario: Delete fragments

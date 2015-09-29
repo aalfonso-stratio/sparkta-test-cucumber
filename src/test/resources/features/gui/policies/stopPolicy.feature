@@ -49,8 +49,8 @@ Feature: Test stopping a policy in Sparkta GUI
 		# Browse to policies
 		Given I browse to '/#/dashboard/policies'
 		Then I wait '2' seconds
-		And '1' element exists with 'css:i[data-qa^="input-context-menu-"]'
-		And '1' element exists with 'css:i[data-qa="input-context-menu-!{previousPolicyID}"]'
+		And '1' element exists with 'css:i[data-qa^="policy-context-menu-"]'
+		And '1' element exists with 'css:i[data-qa="policy-context-menu-!{previousPolicyID}"]'
 		
 		# Press menu
 		Given I click on the element on index '0'
@@ -63,7 +63,7 @@ Feature: Test stopping a policy in Sparkta GUI
 		And a text 'is already stopped! Please run it and try again later.' exists
 		
 		# Press run
-		Given '1' element exists with 'css:i[data-qa="input-context-menu-!{previousPolicyID}"]'
+		Given '1' element exists with 'css:i[data-qa="policy-context-menu-!{previousPolicyID}"]'
 		When I click on the element on index '0'
 		Then I wait '1' second
 		Then '1' element exists with 'css:st-menu-element[data-qa="policy-context-menu-!{previousPolicyID}-run"]'
@@ -72,7 +72,7 @@ Feature: Test stopping a policy in Sparkta GUI
 		And I wait '2' seconds
 		
 		# Press stop
-		Given '1' element exists with 'css:i[data-qa="input-context-menu-!{previousPolicyID}"]'
+		Given '1' element exists with 'css:i[data-qa="policy-context-menu-!{previousPolicyID}"]'
 		When I click on the element on index '0'
 		Then I wait '1' second
 		And '1' element exists with 'css:st-menu-element[data-qa="policy-context-menu-!{previousPolicyID}-stop"]'

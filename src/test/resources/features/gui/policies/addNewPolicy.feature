@@ -313,7 +313,7 @@ Feature: Test adding a new policy in Sparkta GUI
 		And I select 'Hour' on the element on index '0'
 		And I select 'Day' on the element on index '0'
 		And I select 'Month' on the element on index '0'
-		#!!! And I select 'Year' on the element on index '0'
+		And I select 'Year' on the element on index '0'
 		
 		# Add Fields
 		Given '1' element exists with 'css:div[data-qa^="policy-cube-outputlist-"]'
@@ -426,7 +426,54 @@ Feature: Test adding a new policy in Sparkta GUI
 		Then I click on the element on index '0'
 		Then '2' elements exist with 'css:i[data-qa^="policy-cube-arrow-"]'
 		
-		## !! TODO Delete cube
+		## Delete cube
+		Given '1' element exists with 'css:i[data-qa="policy-cube-arrow-2"]'
+		Then I scroll 'up' '250' pixels
+		And I wait '5' seconds
+		And I click on the element on index '0'
+		Given '1' element exists with 'css:i[data-qa="policy-cube-arrow-1"]'
+		Then I click on the element on index '0'
+		Given '1' element exists with 'css:button[data-qa="policy-cube-delete-button"]'
+		Then I click on the element on index '0'
+		And '1' element exists with 'css:aside[data-qa="confirm-modal"]'
+		Given '1' element exists with 'css:button[data-qa="modal-ok-button"]'
+		Then I click on the element on index '0'
+		
+		# Add cube
+		# Fill Name
+		Given '1' element exists with 'css:input[data-qa="policy-cube-name"]'
+		Then I send 'HOME, SHIFT + END, DELETE' on the element on index '0'
+		Then I type 'myCube' on the element on index '0'
+
+		# Add Field
+		Given '1' element exists with 'css:div[data-qa^="policy-cube-outputlist-"]'
+		When I click on the element on index '0'
+		Then '1' element exists with 'css:div[data-qa="dimension-modal"]'
+		Given '1' element exists with 'css:input[data-qa="dimension-modal-name"]'
+		When I send 'HOME, SHIFT + END, DELETE' on the element on index '0'
+		Then I type 'myDimension' on the element on index '0'
+		# Create
+		Given '1' element exists with 'css:button[data-qa="modal-ok-button"]'
+		When I click on the element on index '0'
+		# Check one dimension has been added
+		Then '1' element exists with 'css:div[data-qa^="policy-cube-dimensionslist-"]'
+
+		# Add Function
+		Given '16' elements exist with 'css:div[data-qa^="policy-cube-functionlist-"]'
+		When I click on the element on index '0'
+		Then '1' element exists with 'css:aside[data-qa="operator-modal"]'	
+		# Try with empty Name
+		Given '1' element exists with 'css:input[data-qa="operator-modal-name"]'
+		Then I send 'HOME, SHIFT + END, DELETE' on the element on index '0'
+		Then I type 'myOperator' on the element on index '0'
+		Given '1' element exists with 'css:button[data-qa="modal-ok-button"]'
+		When I click on the element on index '0'
+		Then '1' element exists with 'css:div[data-qa^="policy-cube-operatorlist-"]'
+		
+		# Add cube
+		Given '1' element exists with 'css:button[data-qa="policy-cube-add-button"]'
+		Then I click on the element on index '0'
+		Then '2' elements exist with 'css:i[data-qa^="policy-cube-arrow-"]'
 		
 		# Continue to NEXT SCREEN
 		Given '1' element exists with 'css:button[data-qa="policy-cube-next-button"]'
@@ -498,14 +545,14 @@ Feature: Test adding a new policy in Sparkta GUI
 		Given '1' element exists with 'css:a[data-qa="dashboard-menu-policies"]'
 		Then I click on the element on index '0'		
 		
-#		# Delete fragments
-#		When I send a 'DELETE' request to '/fragment/input/!{previousFragmentID}'
-#		Then the service response status must be '200'.
-#		When I send a 'GET' request to '/fragment/input'
-#		Then the service response status must be '200' and its response must contain the text '[]'
-#		When I send a 'DELETE' request to '/fragment/output/!{previousFragmentID_2}'
-#		Then the service response status must be '200'.
-#		When I send a 'GET' request to '/fragment/output'
-#		Then the service response status must be '200' and its response must contain the text '[]'
+		# Delete fragments
+		When I send a 'DELETE' request to '/fragment/input/!{previousFragmentID}'
+		Then the service response status must be '200'.
+		When I send a 'GET' request to '/fragment/input'
+		Then the service response status must be '200' and its response must contain the text '[]'
+		When I send a 'DELETE' request to '/fragment/output/!{previousFragmentID_2}'
+		Then the service response status must be '200'.
+		When I send a 'GET' request to '/fragment/output'
+		Then the service response status must be '200' and its response must contain the text '[]'
 
 		

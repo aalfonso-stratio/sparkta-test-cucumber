@@ -1,5 +1,5 @@
 @web @rest
-Feature: Test stopping a policy in Sparkta GUI
+Feature: Test deleting a policy in Sparkta GUI
 
 	Background: Setup Sparkta GUI
 		Given I set web base url to '${SPARKTA_HOST}:${SPARKTA_PORT}'
@@ -54,32 +54,18 @@ Feature: Test stopping a policy in Sparkta GUI
 		
 		# Press menu
 		Given I click on the element on index '0'
-		Then I wait '1' second
-		Then '1' element exists with 'css:st-menu-element[data-qa="policy-context-menu-!{previousPolicyID}-stop"]'
+		Then '1' element exists with 'css:st-menu-element[data-qa="policy-context-menu-!{previousPolicyID}-delete"]'
 		
-		# Press stop (when policy is not running)
+		# Delete policy
 		Given I click on the element on index '0'
-		And '1' element exists with 'css:div[data-qa="manage-policies-error-msg"]'
-		And a text 'is already stopped! Please run it and try again later.' exists
-		
-		# Press run
-		Given '1' element exists with 'css:i[data-qa="input-context-menu-!{previousPolicyID}"]'
-		When I click on the element on index '0'
-		Then I wait '1' second
-		Then '1' element exists with 'css:st-menu-element[data-qa="policy-context-menu-!{previousPolicyID}-run"]'
+		Then '1' element exists with 'css:aside[data-qa="delete-policy-modal"]'
+		Given '1' element exists with 'css:button[data-qa="modal-ok-button"]'
 		When I click on the element on index '0'
 		Then '1' element exists with 'css:div[data-qa="manage-policies-error-msg"]'
-		And I wait '2' seconds
+		And a text 'The policy has been deleted!' exists
+		And '0' elements exist with 'css:i[data-qa^="input-context-menu-"]'
+
 		
-		# Press stop
-		Given '1' element exists with 'css:i[data-qa="input-context-menu-!{previousPolicyID}"]'
-		When I click on the element on index '0'
-		Then I wait '1' second
-		And '1' element exists with 'css:st-menu-element[data-qa="policy-context-menu-!{previousPolicyID}-stop"]'
-		When I click on the element on index '0'
-		Then '1' element exists with 'css:div[data-qa="manage-policies-error-msg"]'
-		And a text 'is stopping!' exists
-				
 		Scenario: Delete fragments
 		When I send a 'DELETE' request to '/fragment/input/!{previousFragmentID}'
 		Then the service response status must be '200'.
@@ -89,3 +75,5 @@ Feature: Test stopping a policy in Sparkta GUI
 		Then the service response status must be '200'.
 		When I send a 'GET' request to '/fragment/output'
 		Then the service response status must be '200' and its response must contain the text '[]'
+		
+		

@@ -5,7 +5,7 @@ Feature: Test adding a new policy in Sparkta GUI
 		Given I set web base url to '${SPARKTA_HOST}:${SPARKTA_PORT}'
 		Given I send requests to '${SPARKTA_HOST}:${SPARKTA_API_PORT}'
 	
-	Scenario: Check all expected elements are available for policies
+	Scenario: Add a new policy
 		# Browse to policies
 		Given I browse to '/#/dashboard/policies'
 		Then I wait '2' seconds
@@ -114,7 +114,8 @@ Feature: Test adding a new policy in Sparkta GUI
 		# Screen 3/6 Model
 		Given '1' element exists with 'css:button[data-qa="policy-model-add-button"]'
 		When I click on the element on index '0'
-		Then '1' element exists with 'css:div[data-qa="policy-modal-error-msg-accordion"]'
+		Then '1' element exists with 'css:div[data-qa="policy-model-error-msg"]'
+		
 		
 		Given '1' element exists with 'css:input[data-qa="policy-model-name"]'
 		Then I type 'myModel' on the element on index '0'
@@ -124,7 +125,8 @@ Feature: Test adding a new policy in Sparkta GUI
 		Then I clear the content on text input at index '0'
 		Given '1' element exists with 'css:button[data-qa="policy-model-add-button"]'
 		When I click on the element on index '0'
-		Then '1' element exists with 'css:div[data-qa="policy-modal-error-msg-accordion"]'
+		Then '1' element exists with 'css:div[data-qa="policy-model-error-msg"]'
+		
 		
 		# Fill Configuration
 		Given '1' element exists with 'css:textarea[data-qa="policy-model-configuration-textarea"]'
@@ -155,7 +157,7 @@ Feature: Test adding a new policy in Sparkta GUI
 		
 		# Delete model
 		Given '1' element exists with 'css:i[data-qa="policy-model-arrow-2"]'
-		Then I scroll 'up' '250' pixels
+		Then I send 'PAGE_UP'
 		Then I click on the element on index '0'
 		
 		Given '1' element exists with 'css:i[data-qa="policy-model-arrow-1"]'
@@ -174,7 +176,8 @@ Feature: Test adding a new policy in Sparkta GUI
 		
 		Given '1' element exists with 'css:button[data-qa="policy-model-add-button"]'
 		When I click on the element on index '0'
-		Then '1' element exists with 'css:div[data-qa="policy-modal-error-msg-accordion"]'
+		Then '1' element exists with 'css:div[data-qa="policy-model-error-msg"]'
+		
 		
 		Given '1' element exists with 'css:input[data-qa="policy-model-name"]'
 		Then I type 'myModel' on the element on index '0'		
@@ -184,7 +187,7 @@ Feature: Test adding a new policy in Sparkta GUI
 		Then I clear the content on text input at index '0'
 		Given '1' element exists with 'css:button[data-qa="policy-model-add-button"]'
 		When I click on the element on index '0'
-		Then '1' element exists with 'css:div[data-qa="policy-modal-error-msg-accordion"]'
+		Then '1' element exists with 'css:div[data-qa="policy-model-error-msg"]'
 		
 		# Fill Configuration
 		Given '1' element exists with 'css:textarea[data-qa="policy-model-configuration-textarea"]'
@@ -232,7 +235,7 @@ Feature: Test adding a new policy in Sparkta GUI
 		Then I click on the element on index '0'
 		Given '1' element exists with 'css:button[data-qa="policy-model-add-button"]'
 		When I click on the element on index '0'
-		Then '1' element exists with 'css:div[data-qa="policy-modal-error-msg-accordion"]'
+		Then '1' element exists with 'css:div[data-qa="policy-model-error-msg"]'
 		
 		Given '1' element exists with 'css:input[data-qa="policy-model-name"]'
 		Then I type 'myModel' on the element on index '0'
@@ -242,7 +245,8 @@ Feature: Test adding a new policy in Sparkta GUI
 		Then I clear the content on text input at index '0'
 		Given '1' element exists with 'css:button[data-qa="policy-model-add-button"]'
 		When I click on the element on index '0'
-		Then '1' element exists with 'css:div[data-qa="policy-modal-error-msg-accordion"]'
+		#Then '1' element exists with 'css:div[data-qa="policy-modal-error-msg-accordion"]'
+		Then '1' element exists with 'css:div[data-qa="policy-model-error-msg"]'
 		
 		# Fill Configuration
 		Given '1' element exists with 'css:textarea[data-qa="policy-model-configuration-textarea"]'
@@ -281,26 +285,28 @@ Feature: Test adding a new policy in Sparkta GUI
 		# Try NO CUBES
 		Given '1' element exists with 'css:button[data-qa="policy-cube-next-button"]'
 		When I click on the element on index '0'
-		Then '1' element exists with 'css:div[data-qa="policy-cube-error-msg"]'
+		Then '1' element exists with 'css:div[data-qa="policy-cube-accordion-error-msg"]'
 		
 		# Try empty Name
 		Given '1' element exists with 'css:button[data-qa="policy-cube-add-button"]'
 		When I click on the element on index '0'
-		Then '1' element exists with 'css:div[data-qa="policy-cube-error-msg-accordion"]'
+		Then '1' element exists with 'css:div[data-qa="policy-cube-error-msg"]'
+		
 		
 		# Fill in Name
 		Given '1' element exists with 'css:input[data-qa="policy-cube-name"]'
 		Then I type 'myCube' on the element on index '0'
 		Given '1' element exists with 'css:button[data-qa="policy-cube-add-button"]'
 		When I click on the element on index '0'
-		Then '1' element exists with 'css:div[data-qa="policy-cube-error-msg-accordion"]'
+		Then '1' element exists with 'css:div[data-qa="policy-cube-error-msg"]'
+		
 		
 		# Try empty Time dimension
 		Given '1' element exists with 'css:input[data-qa="policy-cube-checkpoint-time-dimension"]'
 		Then I send 'HOME, SHIFT + END, DELETE' on the element on index '0'
 		Given '1' element exists with 'css:button[data-qa="policy-cube-add-button"]'
 		When I click on the element on index '0'
-		Then '1' element exists with 'css:div[data-qa="policy-cube-error-msg-accordion"]'
+		Then '1' element exists with 'css:div[data-qa="policy-cube-error-msg"]'
 		# Fill value
 		Given '1' element exists with 'css:input[data-qa="policy-cube-checkpoint-time-dimension"]'
 		Then I type 'minute' on the element on index '0'
@@ -429,7 +435,7 @@ Feature: Test adding a new policy in Sparkta GUI
 		
 		## Delete cube
 		Given '1' element exists with 'css:i[data-qa="policy-cube-arrow-2"]'
-		Then I scroll 'up' '250' pixels
+		Then I send 'PAGE_UP'
 		And I wait '5' seconds
 		And I click on the element on index '0'
 		Given '1' element exists with 'css:i[data-qa="policy-cube-arrow-1"]'

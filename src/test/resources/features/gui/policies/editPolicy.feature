@@ -5,7 +5,7 @@ Feature: Test editting a policy in Sparkta GUI
 		Given I set web base url to '${SPARKTA_HOST}:${SPARKTA_PORT}'
 		Given I send requests to '${SPARKTA_HOST}:${SPARKTA_API_PORT}'
 			
-	Scenario: Stop a policy
+	Scenario: Edit a policy
 		# Create input fragment
 		Given I send a 'POST' request to '/fragment' based on 'schemas/fragments/fragment.conf' as 'json' with:
 		| id | DELETE | N/A |

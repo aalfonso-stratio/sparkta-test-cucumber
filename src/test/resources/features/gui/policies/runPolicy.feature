@@ -1,11 +1,11 @@
 @web @rest
-Feature: Test stopping a policy in Sparkta GUI
+Feature: Test running a policy in Sparkta GUI
 
 	Background: Setup Sparkta GUI
 		Given I set web base url to '${SPARKTA_HOST}:${SPARKTA_PORT}'
 		Given I send requests to '${SPARKTA_HOST}:${SPARKTA_API_PORT}'
-			
-	Scenario: Stop a policy
+	
+	Scenario: Try to run a policy
 		# Create input fragment
 		Given I send a 'POST' request to '/fragment' based on 'schemas/fragments/fragment.conf' as 'json' with:
 		| id | DELETE | N/A |
@@ -44,8 +44,8 @@ Feature: Test stopping a policy in Sparkta GUI
 		And I save element '$.id' in attribute 'previousPolicyID'
 		# Check list of policies
 		When I send a 'GET' request to '/policy/all'	
-		Then the service response status must be '200' and its response length must be '1'		
-	
+		Then the service response status must be '200' and its response length must be '1'	
+		
 		# Browse to policies
 		Given I browse to '/#/dashboard/policies'
 		Then I wait '2' seconds
@@ -55,33 +55,19 @@ Feature: Test stopping a policy in Sparkta GUI
 		# Press menu
 		Given I click on the element on index '0'
 		Then I wait '1' second
-		Then '1' element exists with 'css:st-menu-element[data-qa="policy-context-menu-!{previousPolicyID}-stop"]'
-		
-		# Press stop (when policy is not running)
-		Given I click on the element on index '0'
-		And '1' element exists with 'css:div[data-qa="manage-policies-error-msg"]'
-		And a text 'is already stopped! Please run it and try again later.' exists
-		
-		# Press run
-		Given '1' element exists with 'css:i[data-qa="policy-context-menu-!{previousPolicyID}"]'
+		And '1' element exists with 'css:st-menu-element[data-qa="policy-context-menu-!{previousPolicyID}-run"]'
 		When I click on the element on index '0'
-		Then I wait '1' second
-		Then '1' element exists with 'css:st-menu-element[data-qa="policy-context-menu-!{previousPolicyID}-run"]'
-		When I click on the element on index '0'
-		Then '1' element exists with 'css:div[data-qa="manage-policies-error-msg"]'
-		And I wait '1' seconds
-		And a text 'is running!' exists
-		
-		# Press stop
-		Given '1' element exists with 'css:i[data-qa="policy-context-menu-!{previousPolicyID}"]'
-		When I click on the element on index '0'
-		Then I wait '1' second
-		And '1' element exists with 'css:st-menu-element[data-qa="policy-context-menu-!{previousPolicyID}-stop"]'
-		When I click on the element on index '0'
-		Then '1' element exists with 'css:div[data-qa="manage-policies-error-msg"]'
 		And I wait '1' second
-		And a text 'is stopping!' exists
-				
+		Then a text 'is running!' exists
+		
+		Given '1' element exists with 'css:i[data-qa="policy-context-menu-!{previousPolicyID}"]'
+		And I click on the element on index '0'
+		And I wait '1' second
+		And '1' element exists with 'css:st-menu-element[data-qa="policy-context-menu-!{previousPolicyID}-run"]'
+		When I click on the element on index '0'
+		Then I wait '1' second
+		And a text 'is already running! Please stop it and try again later.' exists
+		
 		Scenario: Delete fragments
 		When I send a 'DELETE' request to '/fragment/input/!{previousFragmentID}'
 		Then the service response status must be '200'.

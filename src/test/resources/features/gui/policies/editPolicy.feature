@@ -56,14 +56,109 @@ Feature: Test editting a policy in Sparkta GUI
 		Given I click on the element on index '0'
 		Then I wait '1' second
 		And '1' element exists with 'css:st-menu-element[data-qa="policy-context-menu-!{previousPolicyID}-edit"]'
-				
+		And I click on the element on index '0'
 		
-#		Scenario: Delete fragments
-#		When I send a 'DELETE' request to '/fragment/input/!{previousFragmentID}'
-#		Then the service response status must be '200'.
-#		When I send a 'GET' request to '/fragment/input'
-#		Then the service response status must be '200' and its response must contain the text '[]'
-#		When I send a 'DELETE' request to '/fragment/output/!{previousFragmentID_2}'
-#		Then the service response status must be '200'.
-#		When I send a 'GET' request to '/fragment/output'
-#		Then the service response status must be '200' and its response must contain the text '[]'
+		# Modify name and continue
+		Given '1' element exists with 'css:input[data-qa="policy-description-name"]'
+		Then I send 'HOME, SHIFT + END, DELETE' on the element on index '0'
+		And I type 'myPolicyEdited' on the element on index '0'
+		Given '1' element exists with 'css:button[data-qa="policy-description-next-button"]'
+		When I click on the element on index '0'
+		
+		# 2/6 Continue
+		Given '1' element exists with 'css:button[data-qa="policy-new-next-button"]'
+		When I click on the element on index '0'
+		
+		# 3/6 Delete model, add new one and continue
+		# Delete
+		Given '1' element exists with 'css:i[data-qa="policy-model-arrow-2"]'
+		Then I click on the element on index '0'
+		Given '1' element exists with 'css:i[data-qa="policy-model-arrow-1"]'
+		Then I click on the element on index '0'
+		Given '1' element exists with 'css:button[data-qa="policy-model-delete-button"]'
+		When I click on the element on index '0'
+		Then '1' element exists with 'css:aside[data-qa="confirm-modal"]'
+		And '1' element exists with 'css:button[data-qa="modal-ok-button"]'
+		And I click on the element on index '0'		
+		# Add
+		Given '1' element exists with 'css:input[data-qa="policy-model-name"]'
+		Then I type 'myModel2' on the element on index '0'
+		Given '1' element exists with 'css:input[data-qa="policy-model-outputs"]'
+		Then I type 'myOutput2' on the element on index '0'
+		Given '1' element exists with 'css:i[data-qa="policy-model-outputs-add-button"]'
+		When I click on the element on index '0'
+		Then '1' element exists with 'css:span[data-qa="policy-model-output-list-0"]'
+		Given '1' element exists with 'css:button[data-qa="policy-model-add-button"]'
+		Then I click on the element on index '0'
+		# Continue
+		Given '1' element exists with 'css:button[data-qa="policy-model-next-button"]'
+		Then I click on the element on index '0'
+		
+		# 4/6 Delete cube, add new one and continue
+		# Delete
+		Given '1' element exists with 'css:i[data-qa="policy-cube-arrow-2"]'
+		Then I send 'PAGE_UP'
+		And I wait '5' seconds
+		And I click on the element on index '0'
+		Given '1' element exists with 'css:i[data-qa="policy-cube-arrow-1"]'
+		Then I click on the element on index '0'
+		Given '1' element exists with 'css:button[data-qa="policy-cube-delete-button"]'
+		Then I click on the element on index '0'
+		And '1' element exists with 'css:aside[data-qa="confirm-modal"]'
+		Given '1' element exists with 'css:button[data-qa="modal-ok-button"]'
+		Then I click on the element on index '0'
+		# Add Field
+		Given '1' element exists with 'css:div[data-qa^="policy-cube-outputlist-"]'
+		When I click on the element on index '0'
+		Then '1' element exists with 'css:input[data-qa="dimension-modal-name"]'
+		Given '1' element exists with 'css:input[data-qa="dimension-modal-name"]'
+		Then I send 'HOME, SHIFT + END, DELETE' on the element on index '0'
+		And I type 'myDimension2' on the element on index '0'
+		Given '1' element exists with 'css:button[data-qa="modal-ok-button"]'
+		When I click on the element on index '0'
+		Then '1' element exists with 'css:div[data-qa^="policy-cube-dimensionslist-"]'
+		# Add Function
+		Given '16' elements exist with 'css:div[data-qa^="policy-cube-functionlist-"]'
+		When I click on the element on index '0'
+		Then '1' element exists with 'css:aside[data-qa="operator-modal"]'
+		Given '1' element exists with 'css:input[data-qa="operator-modal-name"]'
+		Then I send 'HOME, SHIFT + END, DELETE' on the element on index '0'
+		Then I type 'myOperator2' on the element on index '0'
+		Given '1' element exists with 'css:button[data-qa="modal-ok-button"]'
+		When I click on the element on index '0'
+		Then '1' elements exist with 'css:div[data-qa^="policy-cube-operatorlist-"]'
+		# Add
+		Given '1' element exists with 'css:button[data-qa="policy-cube-add-button"]'
+		Then I click on the element on index '0'
+		Then '2' elements exist with 'css:i[data-qa^="policy-cube-arrow-"]'
+		# Continue
+		Given '1' element exists with 'css:button[data-qa="policy-cube-next-button"]'
+		When I click on the element on index '0'
+		Then '1' element exists with 'css:button[data-qa="policy-outputs-next-button"]'
+		
+		# 5/6 Continue
+		Given '1' element exists with 'css:button[data-qa="policy-outputs-next-button"]'
+		Then I click on the element on index '0'
+		
+		# 6/6 Continue
+		Given '1' element exists with 'css:button[data-qa="policy-save-button"]'
+		Then I click on the element on index '0'
+		
+		Given '1' element exists with 'css:aside[data-qa="confirm-modal"]'
+		And '1' element exists with 'css:button[data-qa="modal-ok-button"]'
+		Then I click on the element on index '0'
+		And '1' element exists with 'css:i[data-qa="policy-context-menu-!{previousPolicyID}"]'
+		
+		Scenario: Delete policy and fragments
+		When I send a 'DELETE' request to '/policy/!{previousPolicyID}'
+		Then the service response status must be '200'.
+		When I send a 'GET' request to '/policy/all'
+		Then the service response status must be '200' and its response must contain the text '[]'
+		When I send a 'DELETE' request to '/fragment/input/!{previousFragmentID}'
+		Then the service response status must be '200'.
+		When I send a 'GET' request to '/fragment/input'
+		Then the service response status must be '200' and its response must contain the text '[]'
+		When I send a 'DELETE' request to '/fragment/output/!{previousFragmentID_2}'
+		Then the service response status must be '200'.
+		When I send a 'GET' request to '/fragment/output'
+		Then the service response status must be '200' and its response must contain the text '[]'

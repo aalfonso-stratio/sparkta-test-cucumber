@@ -115,14 +115,14 @@ Feature: Test all PUT operations for policies in Sparkta Swagger API
 		| fragments | DELETE | N/A |
 		| id | UPDATE | !{previousPolicyID} |
 		| cubes[0].operators | DELETE | N/A |
-		Then the service response status must be '201'.
+		Then the service response status must be '200'.
 		
 	Scenario: Update a existing policy
 		When I send a 'PUT' request to '/policy' based on 'schemas/policies/policy.conf' as 'json' with:
 		| name | UPDATE | newvalidpolicy |
 		| fragments | DELETE | N/A |
 		| id | UPDATE | !{previousPolicyID} |	
-		Then the service response status must be '201'.
+		Then the service response status must be '200'.
 	
 	Scenario: Clean everything up
 		When I send a 'DELETE' request to '/policy/!{previousPolicyID}'

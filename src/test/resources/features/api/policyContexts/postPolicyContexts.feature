@@ -8,8 +8,6 @@ Feature: Test all POST operations for policyContexts in Sparkta Swagger API
 		When I send a 'POST' request to '/policyContext' as 'json'
 		Then the service response status must be '400' and its response must contain the text 'Request entity expected but not supplied'
 	
-	# This test should fail
-	# Issue: 835
 	Scenario: Add a policyContext with no name
 		Given I send a 'POST' request to '/policyContext' based on 'schemas/policies/policy.conf' as 'json' with:
 		| name | DELETE | N/A |
@@ -96,7 +94,7 @@ Feature: Test all POST operations for policyContexts in Sparkta Swagger API
 		And I save element '$.policyId' in attribute 'previousPolicyID'
 		# One policyContext created
 		When I send a 'GET' request to '/policyContext'
-		Then the service response status must be '200' and its response length must be '1'
+		Then the service response status must be '200' and its response must contain the text '"id":"!{previousPolicyID}"'
 		# One policy created
 		When I send a 'GET' request to '/policy/all'	
 		Then the service response status must be '200' and its response length must be '1'
@@ -118,9 +116,10 @@ Feature: Test all POST operations for policyContexts in Sparkta Swagger API
 		| id | DELETE | N/A |
 		| input | DELETE | N/A |
 		Then the service response status must be '200' and its response must contain the text '"policyName":"policyContext1InputFragment"'
+		And I save element '$.policyId' in attribute 'previousPolicyID_2'
 		# One policyContext created
 		When I send a 'GET' request to '/policyContext'
-		Then the service response status must be '200' and its response length must be '2'
+		Then the service response status must be '200' and its response must contain the text '"id":"!{previousPolicyID_2}"'
 		# One policy created
 		When I send a 'GET' request to '/policy/all'	
 		Then the service response status must be '200' and its response length must be '2'
@@ -160,9 +159,10 @@ Feature: Test all POST operations for policyContexts in Sparkta Swagger API
 		| outputs | DELETE | N/A |
 		| name | UPDATE | policyContextTwoOutputFragment |	
 		Then the service response status must be '200' and its response must contain the text '"policyName":"policyContextTwoOutputFragment"'
+		And I save element '$.policyId' in attribute 'previousPolicyID_2'
 		# One policyContext created
 		When I send a 'GET' request to '/policyContext'
-		Then the service response status must be '200' and its response length must be '3'
+		Then the service response status must be '200' and its response must contain the text '"id":"!{previousPolicyID_2}"'
 		# One policy created
 		When I send a 'GET' request to '/policy/all'	
 		Then the service response status must be '200' and its response length must be '2'		

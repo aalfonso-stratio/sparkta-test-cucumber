@@ -40,12 +40,12 @@ Feature: Test all GET operations for policies in Sparkta Swagger API
 	
 	Scenario: Get a existing policy by name
 		When I send a 'GET' request to '/policy/findByName/basicpolicy'
-		Then the service response status must be '200'.
+		Then the service response status must be '200' and its response must contain the text '"id":"!{previousPolicyID}"'
 		# Should check that value returned is the expected policy
 		
 	Scenario: Get a existing policy by id
 		When I send a 'GET' request to '/policy/find/!{previousPolicyID}'
-		Then the service response status must be '200'.
+		Then the service response status must be '200' and its response must contain the text '"id":"!{previousPolicyID}"'
 		# Should check that value returned is the expected policy
 		
 	Scenario: Run a non-existing policy
@@ -56,12 +56,16 @@ Feature: Test all GET operations for policies in Sparkta Swagger API
 		When I send a 'GET' request to '/policy/run/!{previousPolicyID}'
 		Then the service response status must be '200' and its response must contain the text '{"message":"Creating new context'
 		When I send a 'GET' request to '/policyContext'	
-		Then the service response status must be '200' and its response length must be '1'
+		Then the service response status must be '200' and its response must contain the text '"id":"!{previousPolicyID}"'
 		
 #	Scenario: Run the same existing policy
 #		When I send a 'GET' request to 'policy/run/!{previousPolicyID}'
 #		Then the service response status must be '404' and its response must contain the text '{"message":"Creating new context'
 #		
+	Scenario: Delete policy previously created
+		When I send a 'DELETE' request to '/policy/!{previousPolicyID}'
+		Then the service response status must be '200'.
+	
 	Scenario: Get all policies with fragment with incorrect fragment type
 		When I send a 'GET' request to '/policy/fragment/invalid/nonExistingId'
 		Then the service response status must be '200' and its response must contain the text '[]'
@@ -94,7 +98,7 @@ Feature: Test all GET operations for policies in Sparkta Swagger API
 		
 	Scenario: Get all policies with policies available
 		When I send a 'GET' request to '/policy/all'	
-		Then the service response status must be '200' and its response length must be '2'
+		Then the service response status must be '200' and its response length must be '1'
 
 	Scenario: Run a policy with 2 existing output fragments
 		# Create output fragment 2
